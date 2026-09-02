@@ -549,9 +549,72 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
 .rise{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
 .rise.in{opacity:1;transform:none}
 .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
+/* ═══════════ MOVIMIENTO ═══════════ */
+/* Todo lo de esta seccion es decorativo. El bloque de prefers-reduced-motion
+   que viene justo despues lo apaga entero: nada de aqui puede ser necesario
+   para entender la pagina ni para comprar. */
+
+/* -- el fondo respira: dos capas con ritmos distintos ------------------- */
+.bloom::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(34% 34% at 16% 64%, var(--bloom-b), transparent 64%),
+    radial-gradient(30% 30% at 88% 46%, var(--bloom-a), transparent 62%);
+  animation:bloom-2 34s ease-in-out infinite alternate;
+}
+@keyframes bloom-2{
+  from{transform:translate3d(2%,-3%,0) scale(1.05)}
+  to{transform:translate3d(-4%,5%,0) scale(1)}
+}
+
+/* -- brillo que sigue al cursor sobre las tarjetas ---------------------- */
+/* Las coordenadas las pone el JS en --mx/--my. Sin JS, el degradado se queda
+   centrado y la tarjeta simplemente se ilumina al pasar por encima. */
+.glow{position:relative;isolation:isolate}
+.glow::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  opacity:0;transition:opacity .4s;
+  background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),var(--wash-2),transparent 72%);
+}
+.glow:hover::after{opacity:1}
+
+/* -- un destello cruza los botones al pasar el raton -------------------- */
+.btn-fill{overflow:hidden}
+.btn-fill::after{
+  content:"";position:absolute;top:0;bottom:0;left:-60%;width:42%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.30),transparent);
+  transform:skewX(-18deg);opacity:0;pointer-events:none;
+}
+.btn-fill:hover::after{opacity:1;animation:sheen .8s ease-out}
+@keyframes sheen{to{left:130%}}
+/* En el CTA los botones son blancos sobre violeta: un destello blanco no se
+   veria, asi que alli cruza en violeta. */
+.cta .btn-fill::after{background:linear-gradient(100deg,transparent,color-mix(in srgb,var(--violet-deep) 16%,transparent),transparent)}
+
+/* -- la barra se compacta al bajar -------------------------------------- */
+.nav{transition:box-shadow .35s,border-color .35s}
+.nav-in{transition:height .35s cubic-bezier(.2,.8,.2,1)}
+.nav.tight .nav-in{height:58px}
+.nav.tight{box-shadow:0 12px 34px -26px rgba(0,0,0,.55)}
+
+/* -- las rejillas entran escalonadas, no todas de golpe ----------------- */
+@keyframes pop{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.feats.in .feat,
+.steps.in .step,
+.cmp.in .cmp-col,
+.pr-grid.in .pr{animation:pop .62s cubic-bezier(.2,.8,.2,1) backwards}
+.feats.in .feat:nth-child(2),.steps.in .step:nth-child(2),.cmp.in .cmp-col:nth-child(2),.pr-grid.in .pr:nth-child(2){animation-delay:.07s}
+.feats.in .feat:nth-child(3),.steps.in .step:nth-child(3),.pr-grid.in .pr:nth-child(3){animation-delay:.14s}
+.feats.in .feat:nth-child(4),.pr-grid.in .pr:nth-child(4){animation-delay:.21s}
+.feats.in .feat:nth-child(5){animation-delay:.28s}
+.feats.in .feat:nth-child(6){animation-delay:.35s}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .rise{opacity:1;transform:none}
+  /* el brillo del cursor y el compactado de la barra tampoco */
+  .glow::after{display:none}
+  .nav.tight .nav-in{height:72px}
 }
 </style>
 
@@ -637,7 +700,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">La escalera de calidad</span>
       <h2>DROPIX no te pregunta si quieres lo mejor. Lo toma.</h2>
-      <p>Cada barra abajo es la resolución real, a escala. Un 8K no es «un poco más» que un 1080p: es dieciséis veces su superficie. Por eso importa que el motor sepa pedir el máximo que la plataforma tenga.</p>
+      <p>Cada barra es la resolución real, a escala. Un 8K no es «un poco más» que un 1080p: es dieciséis veces su superficie.</p>
     </div>
 
     <div class="ladder">
@@ -673,23 +736,23 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">El flujo completo</span>
       <h2>Tres pasos. Ni uno más.</h2>
-      <p>Sin cuentas que crear, sin páginas que te reboten a otras cinco, sin turno en un servidor ajeno. Todo ocurre en tu máquina.</p>
+      <p>Sin cuentas que crear, sin páginas que te reboten. Todo ocurre en tu máquina.</p>
     </div>
     <div class="steps rise d1">
-      <div class="step">
+      <div class="step glow">
         <span class="lab cy">Paso 01</span>
         <h3>Pega el enlace</h3>
-        <p>DROPIX detecta la plataforma sola. Si copiaste algo al portapapeles antes de abrirlo, lo analiza al volver.</p>
+        <p>DROPIX detecta la plataforma sola. Si ya lo copiaste, lo analiza al volver.</p>
       </div>
-      <div class="step">
+      <div class="step glow">
         <span class="lab cy">Paso 02</span>
         <h3>Elige calidad o acceso rápido</h3>
-        <p>La escalera completa hasta 8K, o un acceso rápido de un clic: descarga rápida, video para editar, solo audio o máxima calidad sin recodificar.</p>
+        <p>La escalera completa hasta 8K, o un acceso rápido de un clic.</p>
       </div>
-      <div class="step">
+      <div class="step glow">
         <span class="lab cy">Paso 03</span>
         <h3>Descarga y a trabajar</h3>
-        <p>Se guarda listo para tu línea de tiempo. En Pro encadenas varios enlaces y bajas hasta cinco a la vez, en paralelo.</p>
+        <p>Listo para tu línea de tiempo. En Pro bajas hasta cinco a la vez.</p>
       </div>
     </div>
   </div>
@@ -701,7 +764,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">Por dentro</span>
       <h2>Un instrumento de precisión, no un botón mágico</h2>
-      <p>Lo que ves aquí es lo que verás instalado: la tabla de formatos, los perfiles de exportación y la cola en paralelo.</p>
+      <p>Lo que ves aquí es lo que verás instalado.</p>
     </div>
     <div class="tour">
       <div class="tour-cell rise d1">
@@ -727,7 +790,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">Compatibilidad</span>
       <h2>Seis plataformas principales, un solo motor</h2>
-      <p>El motor se actualiza cuando las plataformas cambian —y cambian cada mes— así que la compatibilidad se mantiene sin que reinstales nada.</p>
+      <p>Las plataformas cambian cada mes. El motor se actualiza solo, sin que reinstales nada.</p>
     </div>
     <div class="pgrid rise d1">
       <div class="pcard"><span class="pchip p-yt"><svg class="ui-icon ui-icon-fill" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1A31 31 0 0 0 2 12a31 31 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 22 12a31 31 0 0 0-.4-4.8ZM9.8 15.3V8.7L15.5 12l-5.7 3.3Z"/></svg></span><span>YouTube</span></div>
@@ -747,21 +810,15 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">Todo lo que trae</span>
       <h2>Las cosas pequeñas que te ahorran la tarde</h2>
-      <p>Ninguna es espectacular por separado. Juntas son la diferencia entre pelearte con el archivo y tenerlo listo.</p>
+      <p>Ninguna es espectacular por separado. Juntas te devuelven la tarde.</p>
     </div>
     <div class="feats rise d1">
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg><h3>Recorte antes de bajar</h3><p>Eliges un tramo —«de 2:30 a 4:10»— y te llevas solo eso. Corta con FFmpeg, sin frenar la descarga.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/></svg><h3>Reencuadre a cada red</h3><p>Vertical 9:16 para Reels y TikTok, 16:9 para YouTube o 1:1 para el feed, recortando para llenar.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h11M3 12h11M3 18h7"/><path d="m16 8 5 3-5 3V8Z"/></svg><h3>Listas y canales · Pro</h3><p>Pega una playlist o un canal, ve sus videos al instante y marca solo los que quieres descargar.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H8"/><path d="m8 21-4-4 4-4"/><path d="M4 17h12"/></svg><h3>Convertidor de archivos locales</h3><p>Arrastra archivos que ya tienes y conviértelos o extráeles el audio, sin descargar ni gastar cupo.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 11 8-11 8V4Z"/><path d="M20 5v14"/></svg><h3>SponsorBlock</h3><p>En YouTube, un interruptor quita los tramos de patrocinio y autopromoción. No toca el contenido.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg><h3>La cola no se pierde</h3><p>Cierras DROPIX y lo que quedó a medias reaparece al reabrir. Reanudar continúa de verdad, sin volver a empezar.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="m8 14 2.5 2.5L16 11"/></svg><h3>Carruseles a la carta</h3><p>De una publicación con varias fotos o videos, marcas solo los que quieres —y los videos bajan como video, no su portada.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M10 19a2 2 0 0 0 4 0"/></svg><h3>Avisos del sistema</h3><p>Con la ventana minimizada, tu sistema te avisa cuando una descarga termina o falla. Se apagan desde Ajustes.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="5" width="12" height="16" rx="2"/><path d="M9 5V3h6v2M5 17H3V7h4"/></svg><h3>Monitor de portapapeles</h3><p>Copias un enlace en el navegador y, al volver a DROPIX, ya está analizado esperándote.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r=".8" fill="currentColor" stroke="none"/><circle cx="3.5" cy="12" r=".8" fill="currentColor" stroke="none"/><circle cx="3.5" cy="18" r=".8" fill="currentColor" stroke="none"/></svg><h3>Nombre de archivos a tu gusto</h3><p>Eliges cómo se nombran: solo el título, con código, con canal o con fecha. Además incrusta metadatos y miniatura.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="4.5"/><path d="m11.2 11.2 8.3 8.3"/><path d="m16.5 16.5 2-2"/><path d="m19 19 2-2"/></svg><h3>Contenido privado autorizado</h3><p>Usa la sesión de tu navegador o un cookies.txt. DROPIX nunca guarda contraseñas.</p></div>
-      <div class="feat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><rect x="10" y="10" width="4" height="4"/></svg><h3>Aceleración por GPU</h3><p>Usa NVENC cuando tu tarjeta lo permite; si no, tira de CPU sin que tengas que tocar nada.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg><h3>Recorte antes de bajar</h3><p>Eliges un tramo —«de 2:30 a 4:10»— y te llevas solo eso.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/></svg><h3>Reencuadre a cada red</h3><p>Vertical para Reels y TikTok, 16:9 para YouTube, 1:1 para el feed.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h11M3 12h11M3 18h7"/><path d="m16 8 5 3-5 3V8Z"/></svg><h3>Listas y canales · Pro</h3><p>Pega una playlist o un canal y marca solo los videos que quieres.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 11 8-11 8V4Z"/><path d="M20 5v14"/></svg><h3>SponsorBlock</h3><p>Un interruptor quita los tramos de patrocinio en YouTube.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg><h3>La cola no se pierde</h3><p>Cierras DROPIX y lo que quedó a medias reaparece al reabrir.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H8"/><path d="m8 21-4-4 4-4"/><path d="M4 17h12"/></svg><h3>Convertidor de archivos locales</h3><p>Arrastra lo que ya tienes y conviértelo sin gastar cupo.</p></div>
     </div>
   </div>
 </section>
@@ -772,62 +829,37 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">Contra lo que usas hoy</span>
       <h2>Ya sabes lo que se siente bajar un video «gratis»</h2>
-      <p>Tres botones de descarga y dos son falsos. La página cambia de dominio cada mes. Y el archivo, cuando por fin sale, viene en 720p. DROPIX existe porque ese trámite no debería costarte quince minutos.</p>
+      <p>Tres botones y dos son falsos. El dominio cambia cada mes. Y el archivo, cuando sale, viene en 720p.</p>
     </div>
     <div class="cmp rise d1">
-      <div class="cmp-col lose">
+      <div class="cmp-col lose glow">
         <div class="cmp-h">
           <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3h18M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
           <h3>Un descargador web cualquiera</h3>
         </div>
         <ul>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Anuncios encima del contenido y botones de descarga que no descargan nada</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Tu enlace viaja al servidor de un desconocido para que él lo procese</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Suele topar en 720p o 1080p, y el audio aparte no es opción</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Un archivo a la vez, y haciendo cola detrás de todos los demás</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Cambia de dominio cada tanto y toca buscar cuál funciona hoy</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Anuncios encima y botones que no descargan nada</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Tu enlace viaja al servidor de un desconocido</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Topa en 720p, y el audio aparte no es opción</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Un archivo a la vez, haciendo cola</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Cambia de dominio y toca buscar cuál sirve hoy</li>
         </ul>
       </div>
-      <div class="cmp-col win">
+      <div class="cmp-col win glow">
         <div class="cmp-h">
           <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 6.4A2 2 0 0 1 7.2 4.4h9.6a2 2 0 0 1 2 2v5.1c0 4.4-2.9 7.4-6.8 9.3-3.9-1.9-6.8-4.9-6.8-9.3Z"/></svg>
           <h3>DROPIX en tu escritorio</h3>
         </div>
         <ul>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Cero publicidad.</b> Un solo botón y hace lo que dice</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Todo se procesa en tu máquina.</b> Nada sube a ningún servidor</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Hasta 8K</b> cuando la plataforma lo ofrece, y el audio suelto en MP3</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Descargas en lote,</b> en paralelo y a la velocidad de tu conexión</li>
-          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Se actualiza solo,</b> con cada actualización firmada y verificada al arrancar</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Cero publicidad.</b> Un botón, y hace lo que dice</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Todo en tu máquina.</b> Nada sube a ningún servidor</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Hasta 8K,</b> y el audio suelto en MP3</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Descargas en lote,</b> a la velocidad de tu conexión</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Se actualiza solo,</b> firmado y verificado al arrancar</li>
         </ul>
       </div>
     </div>
-    <p class="cmp-foot rise d2">Lo decimos claro: DROPIX es de pago y esas páginas no. Lo que pagas es que no haya anuncios, que tus archivos no salgan de tu computadora y que alguien mantenga el motor al día cada mes.</p>
-  </div>
-</section>
-
-<!-- ═══════════════ POR QUÉ ═══════════════ -->
-<section>
-  <div class="wrap">
-    <div class="s-head rise">
-      <span class="lab vi">Hecho por diseñadores, para diseñadores</span>
-      <h2>Tres razones, dichas de frente</h2>
-      <p>DROPIX nació en la misma mesa de trabajo que la tuya: la de quien necesita el material listo ahora, no dentro de media hora.</p>
-    </div>
-    <div class="why rise d1">
-      <div class="why-i">
-        <span class="why-ic"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.2 17a8 8 0 1 1 15.6 0"/><path d="m12 13 4-4"/><path d="M6 17h12"/></svg></span>
-        <div><h3>Menos vueltas, más trabajo</h3><p>Pegas el enlace, eliges y listo. Sin registros de por medio, sin páginas que te reboten a otras cinco, sin esperar turno en un servidor ajeno.</p></div>
-      </div>
-      <div class="why-i">
-        <span class="why-ic"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 5.6a2 2 0 0 0-2-1.6H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h5"/><path d="M8 21h5M11 17v4"/><path d="M14 13.4a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v2.7c0 2.3-1.5 3.8-3.5 4.8-2-1-3.5-2.5-3.5-4.8Z"/></svg></span>
-        <div><h3>Tu equipo, tranquilo</h3><p>Cero publicidad dentro de la app y ningún añadido que no pediste: se instala en tu carpeta de usuario, sin permisos de administrador. Todo se procesa en tu computadora, así que tus archivos no suben a ningún lado.</p></div>
-      </div>
-      <div class="why-i">
-        <span class="why-ic"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M16.2 5.2a3.4 3.4 0 0 1 0 6.5M17.5 14.4a6.2 6.2 0 0 1 3.7 5.6"/></svg></span>
-        <div><h3>Por qué DROPIX se cobra</h3><p>Lo decimos de frente: la app es de pago. Ese precio cubre el mantenimiento —las plataformas cambian cada mes y el motor hay que ir actualizándolo— y paga lo que viene. No vendemos tus datos ni alquilamos espacio a anunciantes: si DROPIX se sostiene, es contigo.</p></div>
-      </div>
-    </div>
+    <p class="cmp-foot rise d2">DROPIX es de pago y esas páginas no. Pagas que no haya anuncios, que tus archivos no salgan de tu computadora, y que alguien mantenga el motor al día.</p>
   </div>
 </section>
 
@@ -843,7 +875,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
           SIN TARJETA
         </span>
         <h2>Prueba DROPIX Pro gratis 7 días</h2>
-        <p>Todas las plataformas, calidad máxima y descargas ilimitadas. No pedimos ningún dato de pago y no se renueva solo: al terminar vuelves a Gratis, sin que tengas que cancelar nada.</p>
+        <p>Todo Pro durante una semana. Sin datos de pago y sin renovación automática: al terminar vuelves a Gratis, sin cancelar nada.</p>
       </div>
       <div class="trial-side">
         <a class="btn btn-fill" href="#descargar">
@@ -868,7 +900,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
       Los precios se ajustan a tu moneda al comprar. Ni el mensual ni el anual generan cobros automáticos.
     </p>
     <div class="pr-grid rise d2">
-      <div class="pr">
+      <div class="pr glow">
         <h3><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5a7.2 7.2 0 0 1 14.4 0"/></svg>Free</h3>
         <div class="pr-amt"><span class="c">S/</span><span class="n num">0</span><span class="p">/ mes</span></div>
         <p class="pr-sub">Lo que ya tienes en cuanto instalas</p>
@@ -881,7 +913,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
         <a class="btn btn-line btn-wide" href="#descargar">Empezar gratis</a>
       </div>
 
-      <div class="pr">
+      <div class="pr glow">
         <h3><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M6.1 9A7 7 0 0 1 18 7l2 5M4 12l2 5a7 7 0 0 0 11.9-2"/></svg>Pro Mensual</h3>
         <div class="pr-amt"><span class="c">S/</span><span class="n num">14.90</span><span class="p">/ mes</span></div>
         <p class="pr-sub">30 días, sin cobros automáticos</p>
@@ -894,7 +926,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
         <a class="btn btn-line btn-wide" href="#comprar">Elegir mensual</a>
       </div>
 
-      <div class="pr hot">
+      <div class="pr hot glow">
         <span class="pr-flag">MÁS POPULAR</span>
         <h3><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01"/></svg>Pro Anual</h3>
         <div class="pr-was num">S/ 178.80</div>
@@ -909,7 +941,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
         <a class="btn btn-fill btn-wide" href="#comprar">Elegir anual</a>
       </div>
 
-      <div class="pr">
+      <div class="pr glow">
         <h3><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 8.5a3.5 3.5 0 1 0 0 7c1.9 0 3.1-1.6 5.5-3.5 2.4-1.9 3.6-3.5 5.5-3.5a3.5 3.5 0 1 1 0 7c-1.9 0-3.1-1.6-5.5-3.5C9.6 10.1 8.4 8.5 6.5 8.5Z"/></svg>Para Siempre</h3>
         <div class="pr-amt"><span class="c">S/</span><span class="n num">199</span><span class="p">pago único</span></div>
         <p class="pr-sub">Un solo pago. No vuelve a vencer nunca.</p>
@@ -930,23 +962,23 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="s-head rise">
       <span class="lab vi">Cómo funciona la compra</span>
       <h2>Sin pasarela, sin formularios de tarjeta</h2>
-      <p>Pagas como pagas todo lo demás en Perú. Nosotros no vemos ni guardamos datos de tu tarjeta porque nunca te los pedimos.</p>
+      <p>Pagas como pagas todo lo demás en Perú. Nunca te pedimos datos de tarjeta.</p>
     </div>
     <div class="buy rise d1">
       <div class="buy-s">
         <span class="buy-ic"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-8-8 18-2-7-8-3Z"/><path d="m11 14 10-11"/></svg></span>
         <h3>1 · Nos escribes</h3>
-        <p>Desde la app, por WhatsApp. El mensaje ya va listo con tu correo y el plan que elegiste; no tienes que explicar nada.</p>
+        <p>Por WhatsApp, desde la app. El mensaje ya va listo: no explicas nada.</p>
       </div>
       <div class="buy-s">
         <span class="buy-ic"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19"/><path d="M6 15h3.5"/></svg></span>
         <h3>2 · Pagas</h3>
-        <p>Yape, Plin o transferencia. Lo que ya tienes en el teléfono, sin crear cuenta en ninguna pasarela.</p>
+        <p>Yape, Plin o transferencia. Lo que ya tienes en el teléfono.</p>
       </div>
       <div class="buy-s">
         <span class="buy-ic"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="4.5"/><path d="m11.2 11.2 8.3 8.3"/><path d="m16.5 16.5 2-2"/><path d="m19 19 2-2"/></svg></span>
         <h3>3 · Activas tu código</h3>
-        <p>Te enviamos el código y lo escribes en «Mi cuenta». Pro queda activo al instante, sin reinstalar nada.</p>
+        <p>Escribes el código en «Mi cuenta» y Pro queda activo al instante.</p>
       </div>
     </div>
     <p class="buy-note rise d2">
@@ -967,22 +999,22 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
       <div class="tcard">
         <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 6.4A2 2 0 0 1 7.2 4.4h9.6a2 2 0 0 1 2 2v5.1c0 4.4-2.9 7.4-6.8 9.3-3.9-1.9-6.8-4.9-6.8-9.3Z"/></svg>
         <h4>Actualizaciones firmadas</h4>
-        <p>Cada actualización viaja firmada, y la app recalcula la huella SHA-256 de sus archivos en cada arranque, no solo al instalar. Un byte cambiado y vuelve sola a su copia de fábrica.</p>
+        <p>Cada actualización viaja firmada y la app verifica sus archivos en cada arranque. Un byte cambiado y vuelve sola a fábrica.</p>
       </div>
       <div class="tcard">
         <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h.01M11 15h6"/></svg>
         <h4>Procesamiento local</h4>
-        <p>El motor y FFmpeg corren en tu máquina. Tus archivos no pasan por un servidor nuestro ni de nadie.</p>
+        <p>El motor corre en tu máquina. Tus archivos no pasan por ningún servidor.</p>
       </div>
       <div class="tcard">
         <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
         <h4>Cero publicidad</h4>
-        <p>No hay banners, ni ventanas emergentes, ni espacio alquilado a anunciantes dentro de la app. Nunca.</p>
+        <p>Ni banners, ni ventanas emergentes, ni anunciantes. Nunca.</p>
       </div>
       <div class="tcard">
         <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M6.1 9A7 7 0 0 1 18 7l2 5M4 12l2 5a7 7 0 0 0 11.9-2"/></svg>
         <h4>Se actualiza solo</h4>
-        <p>Las mejoras llegan desde el servidor y se aplican sin pedirte permisos de administrador ni reinstalar 200 MB.</p>
+        <p>Las mejoras se aplican solas, sin permisos de administrador ni reinstalar 200 MB.</p>
       </div>
     </div>
   </div>
@@ -998,27 +1030,27 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="faq rise d1">
       <details class="fq" open>
         <summary>¿Es legal usar DROPIX?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>DROPIX está pensado para contenido autorizado: lo tuyo, contenido de dominio público o aquel para el que tengas permiso de descarga. Para contenido privado, usa la sesión de tu propio navegador o un archivo de cookies autorizado. DROPIX no evita DRM ni descarga contenido protegido, eliminado o bloqueado por la plataforma.</p>
+        <p>Es para contenido autorizado: lo tuyo, de dominio público, o aquel para el que tengas permiso. Para lo privado, usa la sesión de tu propio navegador. DROPIX no evita DRM ni baja contenido protegido.</p>
       </details>
       <details class="fq">
         <summary>¿El plan Pro me va a cobrar solo cuando venza?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>No. Ni el mensual ni el anual generan cobros automáticos: cuando vence, tú decides si renuevas. Y si renuevas antes de que se acabe, los días se suman al final del periodo actual —no pierdes lo que te quedaba. El plan Para Siempre es un pago único y no vuelve a vencer.</p>
+        <p>No. Nunca hay cobro automático: cuando vence, tú decides. Si renuevas antes, los días que te quedaban se suman. El plan Para Siempre es pago único.</p>
       </details>
       <details class="fq">
         <summary>¿Qué pasa si formateo o cambio de computadora?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>Tu plan queda atado a tu cuenta, no al equipo. Desde «Mi cuenta» liberas el dispositivo anterior y activas DROPIX en la máquina nueva sin costo extra. Se puede hacer una vez cada 30 días.</p>
+        <p>Tu plan va con tu cuenta, no con el equipo. Desde «Mi cuenta» liberas el anterior y activas el nuevo sin costo. Una vez cada 30 días.</p>
       </details>
       <details class="fq">
         <summary>¿En qué formatos puedo descargar?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>Video hasta la mejor calidad disponible (MP4 o MKV, AV1 o H.264), solo audio en MP3 para narraciones y música, e imágenes cuando la publicación lo permite. Además hay accesos rápidos de un clic —«Video para editar» saca un H.264 compatible con After Effects, y «Máxima calidad» te deja el original sin recodificar— para que el archivo entre a tu línea de tiempo tal cual.</p>
+        <p>Video en MP4 o MKV, audio suelto en MP3, e imágenes cuando la publicación lo permite. Con accesos de un clic: «Video para editar» saca un H.264 que entra en After Effects, y «Máxima calidad» deja el original sin recodificar.</p>
       </details>
       <details class="fq">
         <summary>¿Necesito permisos de administrador para instalarlo?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>No. DROPIX se instala en tu carpeta de usuario, así que funciona igual en equipos de oficina con permisos restringidos. Las actualizaciones tampoco los piden.</p>
+        <p>No. Se instala en tu carpeta de usuario, así que funciona en equipos de oficina con permisos restringidos. Las actualizaciones tampoco los piden.</p>
       </details>
       <details class="fq" id="faq-mac">
         <summary>En Mac, ¿por qué me dice que «no se puede abrir»?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>No es un fallo de la app: es Gatekeeper, el filtro que macOS aplica a todo lo que no pasa por la App Store. DROPIX está firmado, pero no notarizado por Apple, así que la primera apertura pide un permiso extra. Abre <b>Aplicaciones</b>, haz <b>clic derecho sobre DROPIX → Abrir</b> y confirma. A partir de ahí se abre con doble clic como cualquier otra app y el aviso no vuelve. La versión de Mac es para <b>macOS 11 o superior en equipos con chip Apple</b> (M1 en adelante); en Mac con procesador Intel todavía no corre.</p>
+        <p>No es un fallo: es Gatekeeper, el filtro de macOS para lo que no pasa por la App Store. Abre <b>Aplicaciones</b>, <b>clic derecho sobre DROPIX → Abrir</b> y confirma. Desde ahí funciona con doble clic y el aviso no vuelve. Pide <b>macOS 11 o superior con chip Apple</b>; en Mac Intel todavía no corre.</p>
       </details>
     </div>
   </div>
@@ -1131,6 +1163,39 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
       a.addEventListener('click', function(){ faqMac.open = true; });
     });
     if (location.hash === '#faq-mac') faqMac.open = true;
+  }
+
+  /* ── brillo que sigue al cursor sobre las tarjetas ──────────────
+        Se escucha en el documento y no tarjeta por tarjeta: son 15, y un
+        listener por cada una es trabajo de mas en cada movimiento del raton.
+        Solo escribe las variables CSS; pintar lo hace el navegador. */
+  if (!reduce && window.matchMedia('(hover:hover)').matches) {
+    var pendiente = null;
+    document.addEventListener('pointermove', function (e) {
+      var tarjeta = e.target.closest && e.target.closest('.glow');
+      if (!tarjeta || pendiente) return;
+      pendiente = requestAnimationFrame(function () {
+        pendiente = null;
+        var r = tarjeta.getBoundingClientRect();
+        tarjeta.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        tarjeta.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    }, { passive: true });
+  }
+
+  /* ── la barra se compacta en cuanto te alejas del inicio ───────── */
+  var barra = document.querySelector('.nav');
+  if (barra) {
+    var ultimo = null;
+    var mirar = function () {
+      var apretada = window.scrollY > 80;
+      if (apretada !== ultimo) {
+        ultimo = apretada;
+        barra.classList.toggle('tight', apretada);
+      }
+    };
+    window.addEventListener('scroll', mirar, { passive: true });
+    mirar();
   }
 
   /* ── apariciones al desplazar ───────────────────────────────── */
