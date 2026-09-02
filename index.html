@@ -95,6 +95,19 @@
   --bloom-b:rgba(34,199,219,.13);
   --bloom-c:rgba(57,27,243,.11);
 
+  /* La luz de detras del titular y las motas del hero. Van bajas a proposito:
+     el titular tiene que leerse antes que brillar, y sobre blanco cualquier
+     halo de mas ensucia la letra en vez de encenderla. */
+  --glow-1:rgba(98,89,255,.15);
+  --glow-2:rgba(122,59,255,.09);
+  --orbe-a:rgba(98,89,255,.16);
+  --orbe-b:rgba(34,199,219,.10);
+  --mota-1:98,89,255;
+  --mota-2:60,0,255;
+  --mota-3:14,124,140;
+  --mota-4:122,59,255;
+  --mota-op:.55;
+
   --app-bg:#FFFFFF;
   --app-chrome:#F6F5FC;
   --app-panel:#F9F8FE;
@@ -157,6 +170,18 @@
     --bloom-b:rgba(34,199,219,.14);
     --bloom-c:rgba(75,34,214,.24);
 
+    /* Sobre el fondo oscuro el aura si puede subir: es lo que hace que el
+       titular parezca encendido y no pintado. */
+    --glow-1:rgba(122,107,255,.34);
+    --glow-2:rgba(77,45,254,.22);
+    --orbe-a:rgba(122,107,255,.28);
+    --orbe-b:rgba(34,199,219,.15);
+    --mota-1:122,107,255;
+    --mota-2:201,191,255;
+    --mota-3:34,199,219;
+    --mota-4:154,140,255;
+    --mota-op:1;
+
     --app-bg:#0C0B20;
     --app-chrome:#080720;
     --app-panel:#12102E;
@@ -212,6 +237,18 @@
   --bloom-a:rgba(98,89,255,.34);
   --bloom-b:rgba(34,199,219,.14);
   --bloom-c:rgba(75,34,214,.24);
+
+    /* Sobre el fondo oscuro el aura si puede subir: es lo que hace que el
+       titular parezca encendido y no pintado. */
+    --glow-1:rgba(122,107,255,.34);
+    --glow-2:rgba(77,45,254,.22);
+    --orbe-a:rgba(122,107,255,.28);
+    --orbe-b:rgba(34,199,219,.15);
+    --mota-1:122,107,255;
+    --mota-2:201,191,255;
+    --mota-3:34,199,219;
+    --mota-4:154,140,255;
+    --mota-op:1;
 
   --app-bg:#0C0B20;
   --app-chrome:#080720;
@@ -339,6 +376,31 @@ h4{font-weight:680;letter-spacing:-.01em}
 }
 @keyframes bloom{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-3%,4%,0) scale(1.07)}}
 
+/* -- un tercer resplandor, mas pequeno y mas vivo, que da vueltas --------
+   El .bloom respira en su sitio; este viaja. Es la diferencia entre un fondo
+   quieto y uno que parece tener luz propia. Solo cambia transform, asi que el
+   navegador lo compone sin volver a pintar nada. */
+.orbe{
+  position:absolute;z-index:0;pointer-events:none;
+  top:-70px;left:-140px;width:min(46vw,520px);height:min(46vw,520px);border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, var(--orbe-a), var(--orbe-b) 45%, transparent 72%);
+  filter:blur(44px);
+  animation:orbe 28s ease-in-out infinite;
+}
+@keyframes orbe{
+  0%  {transform:translate3d(0,0,0) scale(1)}
+  25% {transform:translate3d(46vw,70px,0) scale(1.14)}
+  50% {transform:translate3d(78vw,290px,0) scale(.92)}
+  75% {transform:translate3d(28vw,220px,0) scale(1.08)}
+  100%{transform:translate3d(0,0,0) scale(1)}
+}
+
+/* -- motas de color subiendo despacio ------------------------------------
+   Van en un canvas y no en cuarenta divs: cuarenta elementos animados por CSS
+   son cuarenta capas que componer en cada fotograma; esto es una sola textura,
+   y el JS la para en cuanto el hero deja de verse. */
+.chispas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
 .hero-grid{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4vw,58px);align-items:center}
 @media(max-width:1020px){.hero-grid{grid-template-columns:1fr;gap:42px}}
 
@@ -371,7 +433,7 @@ h1.hero-h em{font-style:normal;display:block;color:var(--violet)}
 /* ═══════════ FRANJA TÉCNICA ═══════════ */
 .spec{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:19px 0;margin-top:clamp(38px,6vw,68px)}
 .spec-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px 30px}
-.spec-i{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--text-3);letter-spacing:-.005em}
+.spec-i{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--text-2);letter-spacing:-.005em}
 .spec-i b{color:var(--text);font-weight:650}
 .spec-i .ui-icon{width:16px;height:16px;color:var(--violet);flex:none}
 
@@ -429,18 +491,13 @@ section{padding:clamp(60px,7.5vw,104px) 0;position:relative}
 .pcard span{font-size:13px;font-weight:680;letter-spacing:-.01em}
 .pnote{margin-top:21px;font-size:13.5px;color:var(--text-3);max-width:78ch}
 
-/* ═══════════ POR QUÉ ═══════════ */
-.why{display:grid;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:16px;overflow:hidden}
-.why-i{display:grid;grid-template-columns:52px minmax(0,1fr);gap:20px;padding:28px 30px;background:var(--ground);align-items:start;transition:background .2s}
-.why-i:hover{background:var(--panel)}
-@media(max-width:640px){.why-i{grid-template-columns:42px 1fr;gap:16px;padding:22px 20px}}
-.why-ic{width:42px;height:42px;border-radius:12px;background:var(--wash-2);display:flex;align-items:center;justify-content:center}
-.why-ic .ui-icon{width:22px;height:22px;color:var(--violet)}
-.why-i h3{font-size:17.5px}
-.why-i p{margin-top:9px;font-size:14.5px;color:var(--text-2);max-width:64ch}
-
 /* ═══════════ PRECIOS ═══════════ */
 .pr-note{display:flex;align-items:center;justify-content:center;gap:9px;font-size:13px;color:var(--text-3);margin:-24px auto 36px;max-width:64ch;text-align:center}
+/* La garantia va DEBAJO de la tabla y no dentro de una tarjeta: cubre los tres
+   planes de pago y el que duda es justo el que acaba de leer los precios. */
+.pr-foot{display:flex;align-items:flex-start;justify-content:center;gap:10px;margin:30px auto 0;max-width:70ch;font-size:13.5px;line-height:1.6;color:var(--text-2)}
+.pr-foot b{color:var(--text);font-weight:680}
+.pr-foot .ui-icon{width:18px;height:18px;color:var(--violet);flex:none;margin-top:1px}
 .pr-note .ui-icon{width:16px;height:16px;color:var(--violet);flex:none}
 .pr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch}
 @media(max-width:1020px){.pr-grid{grid-template-columns:1fr 1fr}}
@@ -496,6 +553,11 @@ section{padding:clamp(60px,7.5vw,104px) 0;position:relative}
 .cta-side{position:relative;display:flex;flex-direction:column;gap:10px;flex:none}
 .cta-side .dl{display:flex;flex-wrap:wrap;gap:10px}
 .cta-side small{font-size:12px;color:rgba(255,255,255,.7);text-align:center}
+/* El degradado animado de los titulares esta hecho para leerse SOBRE EL FONDO
+   DE LA PAGINA. Aqui el fondo es la propia marca, asi que el mismo violeta
+   encima del violeta desaparecia. Mantiene el brillo que recorre la frase,
+   pero en blanco: el acento ya lo pone la franja entera. */
+.cta h2 .grad{background-image:linear-gradient(100deg,#fff,#DCD5FF 42%,#fff 78%)}
 
 /* ═══════════ PIE ═══════════ */
 footer{border-top:1px solid var(--hair);padding:48px 0 38px}
@@ -507,6 +569,8 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
 .f-cols a{font-size:13.5px;color:var(--text-2);transition:color .16s}
 .f-cols a:hover{color:var(--violet)}
 .f-bot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--text-3)}
+.f-legal a{color:var(--text-2);transition:color .16s}
+.f-legal a:hover{color:var(--text)}
 .f-ver{font-family:var(--f-mono);font-size:11px;border:1px solid var(--hair);padding:4px 11px;border-radius:100px;letter-spacing:.06em}
 
 /* ═══════════ COMPARATIVA ═══════════ */
@@ -551,10 +615,15 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
 .buy{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:16px;overflow:hidden}
 @media(max-width:800px){.buy{grid-template-columns:1fr}}
 .buy-s{background:var(--ground);padding:28px 26px}
-.buy-ic{width:40px;height:40px;border-radius:11px;background:var(--wash-2);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.buy-ic .ui-icon{width:20px;height:20px;color:var(--violet)}
+.buy-ic{display:block;margin-bottom:14px}
+.buy-ic .ui-icon{width:22px;height:22px;color:var(--violet)}
 .buy-s h3{font-size:17px}
 .buy-s p{margin-top:9px;font-size:14px;color:var(--text-2)}
+/* El paso 1 dice "nos escribes por WhatsApp, desde la app". Quien todavia no
+   ha instalado nada tambien tiene que poder escribir: sin esto, para poder
+   pagarte hay que instalar primero. */
+.buy-cta{display:flex;align-items:center;flex-wrap:wrap;gap:14px 18px;margin-top:26px}
+.buy-cta span{font-size:13.5px;color:var(--text-2)}
 .buy-note{display:flex;align-items:flex-start;gap:10px;margin-top:20px;font-size:13.5px;color:var(--text-3);max-width:76ch}
 .buy-note .ui-icon{width:16px;height:16px;flex:none;margin-top:2px;color:var(--violet)}
 .pr-eq{font-size:11.5px;color:var(--violet);font-weight:650;margin-top:5px}
@@ -610,6 +679,38 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
 /* Safari a veces recorta la ultima letra de un texto con background-clip.
    Un pelo de relleno a la derecha lo evita sin mover nada de sitio. */
 .grad,h1.hero-h em > i{padding-right:.06em;margin-right:-.06em}
+
+/* -- una luz que recorre el titular, POR DETRAS de las letras ------------
+   La primera version ponia el resplandor en las propias letras con
+   drop-shadow. Se veia mal y por una razon concreta: drop-shadow calca el
+   contorno de cada letra, asi que el halo cae dentro del hueco de la "o" y de
+   la "e" y baja el contraste justo donde el ojo lee. El titular salia
+   desenfocado en vez de encendido.
+   Asi que la luz no sale de la letra: pasa por detras. Las letras siguen
+   nitidas -- solo se enciende el aire que las rodea -- y ademas es una sola
+   capa borrosa que el navegador compone, no una sombra que recalcular por
+   glifo y por fotograma.
+   Va SOLO aqui. El mismo efecto repetido en los doce h2 de la pagina deja de
+   leerse como un detalle y empieza a leerse como una plantilla. */
+h1.hero-h{position:relative;isolation:isolate}
+h1.hero-h::before{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  left:-10%;top:-16%;width:58%;height:132%;
+  background:radial-gradient(closest-side, var(--glow-1), var(--glow-2) 52%, transparent 78%);
+  filter:blur(40px);opacity:0;
+  animation:luz-on 1.6s ease-out 1.15s forwards, luz 14s ease-in-out 2.4s infinite;
+}
+@keyframes luz-on{from{opacity:0}to{opacity:1}}
+@keyframes luz{
+  0%  {transform:translate3d(0,0,0) scale(1)}
+  50% {transform:translate3d(52%,5%,0) scale(1.14)}
+  100%{transform:translate3d(0,0,0) scale(1)}
+}
+
+/* Con el hero fuera de pantalla no hay nada que encender: el fondo se congela
+   entero hasta que vuelve. */
+body.quieto .bloom,body.quieto .bloom::after,body.quieto .orbe,
+body.quieto h1.hero-h::before{animation-play-state:paused}
 
 /* -- los titulos de seccion suben y aparecen -----------------------------
    Aqui NO va la rendija del hero. El h1 esta partido en lineas, asi que cada
@@ -737,6 +838,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
 .feats.in .feat:nth-child(4),.pr-grid.in .pr:nth-child(4){animation-delay:.21s}
 .feats.in .feat:nth-child(5){animation-delay:.28s}
 .feats.in .feat:nth-child(6){animation-delay:.35s}
+.feats.in .feat:nth-child(n+7){animation-delay:.42s}
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -749,6 +851,8 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
   .grad,h1.hero-h em > i{animation:none;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--violet)}
   .prog{display:none}
   .ficha{animation:none}
+  /* ni aura ni motas: son decoracion pura y aqui no pinta nada */
+  .orbe,.chispas,h1.hero-h::before{display:none}
 }
 </style>
 
@@ -785,6 +889,8 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
 <!-- ═══════════════ HERO ═══════════════ -->
 <section class="hero" id="top">
   <div class="bloom" aria-hidden="true"></div>
+  <div class="orbe" aria-hidden="true"></div>
+  <canvas class="chispas" id="chispas" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-grid">
       <div>
@@ -835,11 +941,9 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
 
     <div class="spec">
       <div class="spec-row">
-        <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg>Motor <b>DROPIX 0.17</b></span>
-        <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16v12H4V8Z"/><path d="M4 8 7 3h4L8 8M12 8l3-5h4l-3 5"/></svg><b>FFmpeg</b> integrado</span>
-        <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><rect x="10" y="10" width="4" height="4"/></svg>Aceleración por <b>GPU</b></span>
+        <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><rect x="10" y="10" width="4" height="4"/></svg>Aceleración <b>por GPU</b></span>
         <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h7M15 6h5M4 12h3M11 12h9M4 18h10M18 18h2"/><circle cx="13" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg>Códecs <b>AV1 · H.264</b></span>
-        <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M6.1 9A7 7 0 0 1 18 7l2 5M4 12l2 5a7 7 0 0 0 11.9-2"/></svg>Se actualiza <b>solo</b></span>
+        <span class="spec-i"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M6.1 9A7 7 0 0 1 18 7l2 5M4 12l2 5a7 7 0 0 0 11.9-2"/></svg>Actualizaciones <b>automáticas</b></span>
       </div>
     </div>
   </div>
@@ -850,7 +954,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">La escalera de calidad</span>
-      <h2><span class="grad">DROPIX no te pregunta si quieres lo mejor. Lo toma.</span></h2>
+      <h2><span class="grad">Siempre la mejor calidad que haya</span></h2>
       <p>Cada barra es la resolución real, a escala. Un 8K no es «un poco más» que un 1080p: es dieciséis veces su superficie.</p>
     </div>
 
@@ -877,7 +981,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
       </div>
     </div>
 
-    <p class="ladder-foot rise d1"><b>El plan Free llega hasta 1080p.</b> Pro abre el resto de la escalera y, cuando la plataforma no ofrece 8K, baja al siguiente peldaño disponible sin preguntarte dos veces.</p>
+    <p class="ladder-foot rise d1"><b>Gratis bajas hasta 1080p.</b> Pro te abre la escalera entera, 4K y 8K incluidos — y cuando el video no llega tan arriba, se queda con la mejor calidad que exista. Sin preguntarte dos veces.</p>
   </div>
 </section>
 
@@ -914,7 +1018,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Por dentro</span>
-      <h2><span class="grad">Un instrumento de precisión, no un botón mágico</span></h2>
+      <h2><span class="grad">Sale listo para tu línea de tiempo</span></h2>
       <p>Lo que ves aquí es lo que verás instalado.</p>
     </div>
     <div class="tour">
@@ -960,16 +1064,19 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Todo lo que trae</span>
-      <h2><span class="grad">Las cosas pequeñas que te ahorran la tarde</span></h2>
-      <p>Ninguna es espectacular por separado. Juntas te devuelven la tarde.</p>
+      <h2><span class="grad">Recortar, reencuadrar y convertir, sin abrir otro programa</span></h2>
+      <p>Ninguna te va a impresionar en una demo. Juntas te devuelven la tarde.</p>
     </div>
     <div class="feats rise d1">
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h8M16 7h4M4 17h4M12 17h8"/><circle cx="14" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><h3>Perfiles de salida</h3><p>«Video para editar» te da un MP4 con H.264 que tu editor abre directo, sin transcodificar.</p></div>
       <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg><h3>Recorte antes de bajar</h3><p>Eliges un tramo —«de 2:30 a 4:10»— y te llevas solo eso.</p></div>
       <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/></svg><h3>Reencuadre a cada red</h3><p>Vertical para Reels y TikTok, 16:9 para YouTube, 1:1 para el feed.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 3 1.5 4.1L16.6 8.6 12.5 10.1 11 14.2 9.5 10.1 5.4 8.6 9.5 7.1 11 3Z"/><path d="m18 14.5.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3Z"/></svg><h3>Preselección inteligente</h3><p>Fijas una vez tu formato y tu calidad, y deja de preguntarte en cada enlace.</p></div>
       <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h11M3 12h11M3 18h7"/><path d="m16 8 5 3-5 3V8Z"/></svg><h3>Listas y canales · Pro</h3><p>Pega una playlist o un canal y marca solo los videos que quieres.</p></div>
       <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 11 8-11 8V4Z"/><path d="M20 5v14"/></svg><h3>SponsorBlock</h3><p>Un interruptor quita los tramos de patrocinio en YouTube.</p></div>
       <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg><h3>La cola no se pierde</h3><p>Cierras DROPIX y lo que quedó a medias reaparece al reabrir.</p></div>
       <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H8"/><path d="m8 21-4-4 4-4"/><path d="M4 17h12"/></svg><h3>Convertidor de archivos locales</h3><p>Arrastra lo que ya tienes y conviértelo sin gastar cupo.</p></div>
+      <div class="feat glow"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5.5l11-2V16"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><h3>Solo el audio, en MP3</h3><p>Cuando no necesitas la imagen, te llevas la pista y ya.</p></div>
     </div>
   </div>
 </section>
@@ -994,6 +1101,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
           <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Topa en 720p, y el audio aparte no es opción</li>
           <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Un archivo a la vez, haciendo cola</li>
           <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Cambia de dominio y toca buscar cuál sirve hoy</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Te da el archivo y ya: recortar o reencuadrar es otro programa</li>
         </ul>
       </div>
       <div class="cmp-col win glow">
@@ -1007,6 +1115,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
           <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Hasta 8K,</b> y el audio suelto en MP3</li>
           <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Descargas en lote,</b> a la velocidad de tu conexión</li>
           <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Se actualiza solo,</b> firmado y verificado al arrancar</li>
+          <li><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg><b>Recorta y reencuadra al bajar,</b> en vertical, 1:1 o 16:9</li>
         </ul>
       </div>
     </div>
@@ -1104,6 +1213,10 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
         <a class="btn btn-line btn-wide" href="#comprar">Elegir para siempre</a>
       </div>
     </div>
+    <p class="pr-foot rise d2">
+      <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 6.4A2 2 0 0 1 7.2 4.4h9.6a2 2 0 0 1 2 2v5.1c0 4.4-2.9 7.4-6.8 9.3-3.9-1.9-6.8-4.9-6.8-9.3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <span><b>Si DROPIX no funciona en tu equipo, te devolvemos el pago.</b> Tienes 7 días desde la compra para probarlo y escribirnos. Y antes de pagar puedes usar la prueba gratuita, que no pide tarjeta.</span>
+    </p>
   </div>
 </section>
 
@@ -1131,6 +1244,13 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
         <h3>3 · Activas tu código</h3>
         <p>Escribes el código en «Mi cuenta» y Pro queda activo al instante.</p>
       </div>
+    </div>
+    <div class="buy-cta rise d2">
+      <a class="btn btn-fill btn-brand" href="https://wa.me/51937581119?text=Hola%2C%20quiero%20comprar%20DROPIX%20Pro." target="_blank" rel="noopener">
+        <svg class="ui-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15L2 22l5.2-1.4A9.9 9.9 0 1 0 12 2Zm0 1.8a8.1 8.1 0 1 1-4.1 15.1l-.3-.2-3.1.8.8-3-.2-.3A8.1 8.1 0 0 1 12 3.8Z"/><path d="M9.3 7.3c-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.6.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.5.3-.4v-.4l-1.2-2.4Z"/></svg>
+        Escríbenos por WhatsApp
+      </a>
+      <span>¿Prefieres preguntar antes de instalar? Es un chat normal, no un formulario.</span>
     </div>
     <p class="buy-note rise d2">
       <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
@@ -1260,6 +1380,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
           <h5>Soporte</h5>
           <ul>
             <li><a href="#faq">Preguntas frecuentes</a></li>
+            <li><a href="https://wa.me/51937581119?text=Hola%2C%20tengo%20una%20consulta%20sobre%20DROPIX." target="_blank" rel="noopener">WhatsApp · +51 937 581 119</a></li>
             <li><a href="https://github.com/bambam145/dropix-releases/releases" target="_blank" rel="noopener">Descargas y versiones</a></li>
           </ul>
         </div>
@@ -1267,6 +1388,7 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
     </div>
     <div class="f-bot">
       <span>© 2026 DROPIX — Hype Academy. Todos los derechos reservados.</span>
+      <span class="f-legal"><a href="./legal.html">Términos y privacidad</a></span>
       <span class="f-ver">v1.1.1</span>
     </div>
   </div>
@@ -1414,6 +1536,151 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
     }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
     risers.forEach(function(el){ io.observe(el); });
     document.querySelectorAll('.rise.in').forEach(function(el){ fill(el, 400); });
+  }
+
+  /* ── el fondo del hero: motas de color subiendo despacio ────────
+        El orbe y el bloom los mueve el CSS. Aqui van solo las motas y el
+        interruptor que apaga las tres cosas cuando el hero deja de verse: una
+        pagina de 4000 px no tiene por que seguir pintando la portada. */
+  var lienzo = document.getElementById('chispas');
+  var hero = document.querySelector('.hero');
+
+  if (lienzo && hero && !reduce && lienzo.getContext) {
+    var cx = lienzo.getContext('2d');
+    var motas = [], sellos = [], ancho = 0, alto = 0, lazo = 0, antes = 0;
+    var enPantalla = true, opacidad = 1;
+
+    /* Los colores viven en el bloque de tokens y no aqui: asi el tema claro y
+       el oscuro se siguen cambiando en un solo sitio. */
+    function tonos(){
+      var css = getComputedStyle(root), lista = [], i, v;
+      for (i = 1; i <= 4; i++) {
+        v = css.getPropertyValue('--mota-' + i).trim();
+        if (v) lista.push(v);
+      }
+      opacidad = parseFloat(css.getPropertyValue('--mota-op')) || 1;
+      return lista.length ? lista : ['122,107,255'];
+    }
+
+    /* Cada color se dibuja UNA vez en un sello de 64 px y luego solo se estampa
+       escalado. Crear un degradado por mota y por fotograma es exactamente lo
+       que convierte un fondo bonito en un ventilador encendido. */
+    function sellar(){
+      sellos = tonos().map(function(rgb){
+        var s = document.createElement('canvas'); s.width = s.height = 64;
+        var g = s.getContext('2d');
+        var d = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+        d.addColorStop(0,   'rgba(' + rgb + ',1)');
+        d.addColorStop(.26, 'rgba(' + rgb + ',.55)');
+        d.addColorStop(1,   'rgba(' + rgb + ',0)');
+        g.fillStyle = d; g.fillRect(0, 0, 64, 64);
+        return s;
+      });
+    }
+
+    /* Pocas, grandes, lentas y muy tenues: polvo en un haz de luz, no un cielo
+       estrellado. Cuarenta motas pequenas y nitidas se leian como plantilla;
+       doce grandes y difusas se leen como aire. */
+    function nueva(dentro){
+      return {
+        x: Math.random() * ancho,
+        y: dentro ? Math.random() * alto : alto + 40,
+        r: 2.4 + Math.random() * 4,
+        v: 4 + Math.random() * 8,         /* pixeles por segundo, hacia arriba */
+        a: .10 + Math.random() * .20,
+        f: Math.random() * 6.283,         /* fase del vaiven lateral */
+        w: .18 + Math.random() * .4,
+        d: 8 + Math.random() * 22,        /* cuanto se balancea */
+        s: (Math.random() * sellos.length) | 0
+      };
+    }
+
+    function medir(){
+      var caja = hero.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      ancho = Math.round(caja.width); alto = Math.round(caja.height);
+      if (!ancho || !alto) return;
+      lienzo.width = Math.round(ancho * dpr);
+      lienzo.height = Math.round(alto * dpr);
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.max(7, Math.min(16, Math.round(ancho / 88)));
+      motas = [];
+      for (var i = 0; i < n; i++) motas.push(nueva(true));
+    }
+
+    function pinta(ahora){
+      lazo = requestAnimationFrame(pinta);
+      /* por tiempo y no por fotograma: en una pantalla de 120 Hz las motas
+         irian al doble de velocidad si contara fotogramas */
+      var dt = Math.min((ahora - antes) / 1000 || 0, .05);
+      antes = ahora;
+      cx.clearRect(0, 0, ancho, alto);
+      for (var i = 0; i < motas.length; i++) {
+        var m = motas[i];
+        m.y -= m.v * dt;
+        m.f += m.w * dt;
+        if (m.y < -60) { motas[i] = nueva(false); continue; }
+        var t = m.r * 8;
+        /* se encienden al entrar por abajo y se apagan antes de llegar arriba:
+           una mota que aparece o desaparece de golpe delata el truco */
+        var borde = Math.min(1, (alto + 40 - m.y) / 90, (m.y + 60) / 220);
+        cx.globalAlpha = m.a * opacidad * (borde < 0 ? 0 : borde);
+        cx.drawImage(sellos[m.s], m.x + Math.sin(m.f) * m.d - t / 2, m.y - t / 2, t, t);
+      }
+      cx.globalAlpha = 1;
+    }
+
+    function arranca(){
+      if (lazo || !enPantalla || document.hidden) return;
+      antes = performance.now();
+      lazo = requestAnimationFrame(pinta);
+    }
+    function para(){
+      if (!lazo) return;
+      cancelAnimationFrame(lazo); lazo = 0;
+    }
+
+    sellar(); medir(); arranca();
+
+    var remedir = null;
+    var recolocar = function(){
+      if (remedir) return;
+      remedir = requestAnimationFrame(function(){ remedir = null; medir(); });
+    };
+    window.addEventListener('resize', recolocar, { passive: true });
+    /* la captura del hero cambia el alto de la seccion al cargarse */
+    window.addEventListener('load', recolocar);
+
+    /* enciende o apaga el fondo entero: motas, orbe y aura del titular */
+    function mira(dentro){
+      enPantalla = dentro;
+      document.body.classList.toggle('quieto', !dentro);
+      if (dentro) { arranca(); } else { para(); }
+    }
+    /* Al volver de segundo plano se vuelve a medir a mano en vez de esperar al
+       observador: si la pagina se abrio en una pestana de fondo, el navegador
+       ya entrego su unica observacion -- "no se ve" -- y podria no entregar
+       otra nunca. Sin esto, el hero se quedaria congelado para siempre. */
+    function enVista(){
+      var r = hero.getBoundingClientRect();
+      return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+    }
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) { para(); } else { mira(enVista()); }
+    });
+
+    /* al cambiar de tema cambian los colores de las motas */
+    if (sw) sw.addEventListener('click', function(){ setTimeout(sellar, 0); });
+    if (window.matchMedia) {
+      var mqTema = window.matchMedia('(prefers-color-scheme: dark)');
+      if (mqTema.addEventListener) mqTema.addEventListener('change', function(){ sellar(); });
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(e){
+        mira(e[0].isIntersecting);
+      }, { threshold: 0 }).observe(hero);
+    }
   }
 
 })();

@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Términos y privacidad — DROPIX</title>
+<meta name="description" content="Condiciones de uso de DROPIX y qué datos guarda: licencia, planes, devoluciones y tratamiento de la información.">
+<meta name="theme-color" content="#391bf3">
+<link rel="canonical" href="https://dropixapp.github.io/legal.html">
+<link rel="icon" href="./img/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     ANTES DE PUBLICAR, RELLENA ESTO
+     Si facturas, falta la razon social, el RUC y el domicilio fiscal de
+     Hype Academy: van en el punto 1 de los Terminos y en el punto 1 de
+     la Privacidad, donde ahora pone solo "Hype Academy".
+     Este texto se redacto a partir de lo que el producto hace de verdad
+     (licencia por equipo, sin pasarela, que guarda la base de datos y
+     que no guarda). No sustituye la revision de un abogado.
+     ══════════════════════════════════════════════════════════════════ -->
+</head>
+<body>
+<style>
+:root{
+  --void:#F6F5FC;
+  --ground:#FFFFFF;
+  --panel:#F2F0FB;
+  --panel-2:#E9E5F8;
+
+  --hair:#E0DEED;
+  --hair-strong:#CCC9DE;
+  --track:rgba(67,38,255,.12);
+
+  --text:#0F0B28;
+  --text-2:#5F5A7C;
+  --text-3:#8681A3;
+
+  /* El acento sale del isotipo. El hexagono va de #6259FF arriba a #3C00FF
+     abajo, promedio #4D2DFE: azul-violeta saturado, no lila. --brand-a y
+     --brand-b son esos dos extremos exactos, para que los botones lleven el
+     mismo degradado que el logo. --violet es la version legible para texto e
+     iconos: 7,1 de contraste sobre blanco. */
+  --brand-a:#6259FF;
+  --brand-b:#3C00FF;
+  /* Paradas del degradado animado de los titulos. Van sobre TEXTO, asi
+     que las tres tienen que ser legibles por si solas sobre el fondo:
+     4,78 / 7,97 / 5,39 de contraste sobre blanco. */
+  --g1:#6259FF;
+  --g2:#3C00FF;
+  --g3:#7A3BFF;
+  --violet:#4326FF;
+  --violet-hi:#2E0BD9;
+  --violet-deep:#2206AD;
+  --cyan:#0E7C8C;
+  --rose:#D92D3C;
+
+  --wash-1:rgba(67,38,255,.05);
+  --wash-2:rgba(67,38,255,.11);
+  --wash-3:rgba(67,38,255,.16);
+
+  --bloom-a:rgba(98,89,255,.20);
+  --bloom-b:rgba(34,199,219,.13);
+  --bloom-c:rgba(57,27,243,.11);
+
+  /* La luz de detras del titular y las motas del hero. Van bajas a proposito:
+     el titular tiene que leerse antes que brillar, y sobre blanco cualquier
+     halo de mas ensucia la letra en vez de encenderla. */
+  --glow-1:rgba(98,89,255,.15);
+  --glow-2:rgba(122,59,255,.09);
+  --orbe-a:rgba(98,89,255,.16);
+  --orbe-b:rgba(34,199,219,.10);
+  --mota-1:98,89,255;
+  --mota-2:60,0,255;
+  --mota-3:14,124,140;
+  --mota-4:122,59,255;
+  --mota-op:.55;
+
+  --app-bg:#FFFFFF;
+  --app-chrome:#F6F5FC;
+  --app-panel:#F9F8FE;
+  --app-hair:#E0DEED;
+  --app-text:#0F0B28;
+  --app-text-2:#5F5A7C;
+  --app-text-3:#8681A3;
+
+  --sh-app:0 32px 74px -38px rgba(15,11,40,.42);
+  --sh-btn:0 10px 26px -13px rgba(60,0,255,.55);
+  --sh-btn-h:0 18px 40px -15px rgba(60,0,255,.68);
+  --sh-hot:0 24px 52px -30px rgba(60,0,255,.38);
+
+  --f-ui:Inter,"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:ui-monospace,"Cascadia Mono","Consolas",monospace;
+
+  --wrap:1180px;
+  --edge:clamp(20px,5vw,64px);
+}
+
+/* ── OSCURO (preferencia del sistema) ─────────────────────────── */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --void:#080720;
+    --ground:#0C0B20;
+    --panel:#12102E;
+    --panel-2:#191640;
+
+    --hair:#22205A;
+    --hair-strong:#2C2A74;
+    --track:rgba(154,140,255,.17);
+
+    --text:#ECEAFB;
+    --text-2:#A3A0BD;
+    --text-3:#7B77A0;
+
+    /* En oscuro el acento era #A977F2, un lila que no se parecia al logo.
+       Ahora se queda en la familia azul-violeta del isotipo, subido de brillo
+       para tener 7,0 de contraste sobre el fondo. El degradado de los botones
+       tambien se aclara: el #3C00FF del logo sobre fondo oscuro se apaga. */
+    --brand-a:#7A6BFF;
+    --brand-b:#4D2DFE;
+    /* En oscuro el degradado NO puede usar --brand-b: #4D2DFE da 2,88 de
+       contraste sobre el fondo y no se lee. Estas tres si: 4,96 / 11,42
+       / 6,98. */
+    --g1:#7A6BFF;
+    --g2:#C9BFFF;
+    --g3:#9A8CFF;
+    --violet:#9A8CFF;
+    --violet-hi:#B9AFFF;
+    --violet-deep:#4D2DFE;
+    --cyan:#22C7DB;
+    --rose:#F4707C;
+
+    --wash-1:rgba(154,140,255,.09);
+    --wash-2:rgba(154,140,255,.16);
+    --wash-3:rgba(154,140,255,.23);
+
+    --bloom-a:rgba(98,89,255,.34);
+    --bloom-b:rgba(34,199,219,.14);
+    --bloom-c:rgba(75,34,214,.24);
+
+    /* Sobre el fondo oscuro el aura si puede subir: es lo que hace que el
+       titular parezca encendido y no pintado. */
+    --glow-1:rgba(122,107,255,.34);
+    --glow-2:rgba(77,45,254,.22);
+    --orbe-a:rgba(122,107,255,.28);
+    --orbe-b:rgba(34,199,219,.15);
+    --mota-1:122,107,255;
+    --mota-2:201,191,255;
+    --mota-3:34,199,219;
+    --mota-4:154,140,255;
+    --mota-op:1;
+
+    --app-bg:#0C0B20;
+    --app-chrome:#080720;
+    --app-panel:#12102E;
+    --app-hair:#22205A;
+    --app-text:#ECEAFB;
+    --app-text-2:#A3A0BD;
+    --app-text-3:#7B77A0;
+
+    --sh-app:0 50px 110px -40px rgba(0,0,0,.9);
+    --sh-btn:0 10px 28px -12px rgba(122,107,255,.6);
+    --sh-btn-h:0 18px 42px -14px rgba(122,107,255,.75);
+    --sh-hot:0 24px 58px -30px rgba(122,107,255,.6);
+  }
+}
+
+/* ── OSCURO (elegido a mano — gana sobre un sistema claro) ────── */
+:root[data-theme="dark"]{
+  --void:#080720;
+  --ground:#0C0B20;
+  --panel:#12102E;
+  --panel-2:#191640;
+
+  --hair:#22205A;
+  --hair-strong:#2C2A74;
+  --track:rgba(154,140,255,.17);
+
+  --text:#ECEAFB;
+  --text-2:#A3A0BD;
+  --text-3:#7B77A0;
+
+  /* En oscuro el acento era #A977F2, un lila que no se parecia al logo.
+     Ahora se queda en la familia azul-violeta del isotipo, subido de brillo
+     para tener 7,0 de contraste sobre el fondo. El degradado de los botones
+     tambien se aclara: el #3C00FF del logo sobre fondo oscuro se apaga. */
+  --brand-a:#7A6BFF;
+  --brand-b:#4D2DFE;
+  /* En oscuro el degradado NO puede usar --brand-b: #4D2DFE da 2,88 de
+     contraste sobre el fondo y no se lee. Estas tres si: 4,96 / 11,42
+     / 6,98. */
+  --g1:#7A6BFF;
+  --g2:#C9BFFF;
+  --g3:#9A8CFF;
+  --violet:#9A8CFF;
+  --violet-hi:#B9AFFF;
+  --violet-deep:#4D2DFE;
+  --cyan:#22C7DB;
+  --rose:#F4707C;
+
+  --wash-1:rgba(154,140,255,.09);
+  --wash-2:rgba(154,140,255,.16);
+  --wash-3:rgba(154,140,255,.23);
+
+  --bloom-a:rgba(98,89,255,.34);
+  --bloom-b:rgba(34,199,219,.14);
+  --bloom-c:rgba(75,34,214,.24);
+
+    /* Sobre el fondo oscuro el aura si puede subir: es lo que hace que el
+       titular parezca encendido y no pintado. */
+    --glow-1:rgba(122,107,255,.34);
+    --glow-2:rgba(77,45,254,.22);
+    --orbe-a:rgba(122,107,255,.28);
+    --orbe-b:rgba(34,199,219,.15);
+    --mota-1:122,107,255;
+    --mota-2:201,191,255;
+    --mota-3:34,199,219;
+    --mota-4:154,140,255;
+    --mota-op:1;
+
+  --app-bg:#0C0B20;
+  --app-chrome:#080720;
+  --app-panel:#12102E;
+  --app-hair:#22205A;
+  --app-text:#ECEAFB;
+  --app-text-2:#A3A0BD;
+  --app-text-3:#7B77A0;
+
+  --sh-app:0 50px 110px -40px rgba(0,0,0,.9);
+  --sh-btn:0 10px 28px -12px rgba(122,107,255,.6);
+  --sh-btn-h:0 18px 42px -14px rgba(122,107,255,.75);
+  --sh-hot:0 24px 58px -30px rgba(122,107,255,.6);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:92px}
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--text);
+  font-family:var(--f-ui);
+  font-size:16px;line-height:1.55;
+  font-synthesis:none;
+  text-rendering:geometricPrecision;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{margin:0;padding:0;list-style:none}
+p{margin:0}
+button{font:inherit}
+h1,h2,h3,h4{margin:0;text-wrap:balance;line-height:1.12}
+h1{font-weight:750;letter-spacing:-.03em;line-height:1.06}
+h2{font-weight:730;letter-spacing:-.02em}
+h3{font-weight:700;letter-spacing:-.015em}
+h4{font-weight:680;letter-spacing:-.01em}
+::selection{background:var(--violet);color:#fff}
+
+.wrap{max-width:760px;margin:0 auto;padding-inline:clamp(20px,5vw,40px)}
+.top{border-bottom:1px solid var(--hair);background:var(--ground)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:750;font-size:19px;letter-spacing:.01em}
+.logo img{width:29px;height:29px;flex:none}
+.volver{font-size:14px;font-weight:600;color:var(--text-2);transition:color .16s}
+.volver:hover{color:var(--text)}
+
+main{padding:clamp(38px,6vw,68px) 0 clamp(50px,8vw,90px)}
+.lab{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--violet)}
+h1{font-size:clamp(30px,4.4vw,42px);margin-top:14px}
+.fecha{margin-top:14px;font-size:14px;color:var(--text-3)}
+
+.indice{margin-top:34px;padding:20px 22px;border:1px solid var(--hair);border-radius:14px;background:var(--panel)}
+.indice p{font-size:11px;font-family:var(--f-mono);letter-spacing:.14em;color:var(--text-3);margin:0 0 11px}
+.indice ul{display:flex;flex-wrap:wrap;gap:8px 22px}
+.indice a{font-size:14.5px;font-weight:620;color:var(--violet)}
+.indice a:hover{text-decoration:underline}
+
+section{margin-top:clamp(42px,6vw,64px);scroll-margin-top:88px}
+section > h2{font-size:clamp(23px,3vw,30px);padding-bottom:14px;border-bottom:1px solid var(--hair)}
+h3{font-size:16.5px;margin-top:30px}
+p,li{font-size:15px;line-height:1.68;color:var(--text-2)}
+p{margin-top:11px}
+b{color:var(--text);font-weight:680}
+ul.lista{margin-top:12px;display:grid;gap:9px}
+ul.lista li{position:relative;padding-left:19px}
+ul.lista li::before{content:"";position:absolute;left:2px;top:10px;width:5px;height:5px;border-radius:50%;background:var(--violet)}
+a.enl{color:var(--violet);font-weight:620}
+a.enl:hover{text-decoration:underline}
+
+.pie{margin-top:clamp(46px,7vw,74px);padding-top:26px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:space-between;font-size:13px;color:var(--text-3)}
+</style>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="./index.html">
+      <img src="./img/icono.png" width="29" height="29" alt="" aria-hidden="true">
+      DROPIX
+    </a>
+    <a class="volver" href="./index.html">&larr; Volver a la portada</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <span class="lab">Documentos legales</span>
+  <h1>Términos y privacidad</h1>
+  <p class="fecha">DROPIX es un producto de Hype Academy. Última actualización: 2 de septiembre de 2026.</p>
+
+  <div class="indice">
+    <p>EN ESTA PÁGINA</p>
+    <ul>
+      <li><a href="#terminos">Términos de uso</a></li>
+      <li><a href="#privacidad">Privacidad</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+
+  <section id="terminos">
+    <h2>Términos de uso</h2>
+
+    <h3>1. Quiénes somos y qué es DROPIX</h3>
+    <p>DROPIX es una aplicación de escritorio para Windows y macOS desarrollada por <b>Hype Academy</b>. Descarga y convierte video, audio e imagen desde plataformas públicas. El procesamiento ocurre <b>en tu propia computadora</b>: la aplicación no sube tus archivos ni los enlaces que pegas a ningún servidor nuestro.</p>
+    <p>Al instalar o usar DROPIX aceptas estos términos. Si no estás de acuerdo con ellos, no uses la aplicación.</p>
+
+    <h3>2. Uso permitido y tu responsabilidad</h3>
+    <p>DROPIX es una herramienta de propósito general. <b>Tú eres responsable del contenido que descargas y del uso que le das.</b> Solo debes usarla con:</p>
+    <ul class="lista">
+      <li>Contenido del que seas autor o titular de los derechos.</li>
+      <li>Contenido de dominio público o con una licencia que permita la descarga.</li>
+      <li>Contenido para el que cuentes con permiso expreso de su titular.</li>
+      <li>Contenido cuya descarga permitan las condiciones de la plataforma de origen.</li>
+    </ul>
+    <p>DROPIX <b>no elude medidas de protección (DRM)</b> ni descarga contenido protegido por ellas, contenido privado sin autorización ni contenido bloqueado por la plataforma. Para material privado propio, la aplicación usa la sesión de tu navegador; esa sesión es tuya y no se comparte con nosotros.</p>
+    <p>No está permitido revender, redistribuir ni sublicenciar la aplicación, ni intentar descompilarla o alterar el sistema de licencias.</p>
+
+    <h3>3. Tu licencia</h3>
+    <p>Al comprar un plan Pro recibes una licencia <b>personal e intransferible</b>. Funciona en <b>un equipo a la vez</b> y puedes cambiar de computadora cuando quieras, sin trámites. Si renuevas antes del vencimiento, los días que te quedaban se suman al periodo nuevo.</p>
+    <p>Compartir un código de activación con terceros, o usarlo en más equipos de los que permite el plan, puede suponer su anulación sin reembolso.</p>
+
+    <h3>4. Planes, precios y pagos</h3>
+    <p>El plan Gratis no caduca y no requiere pago. Los planes Pro (mensual, anual y para siempre) se pagan por Yape, Plin o transferencia, coordinados por WhatsApp. <b>No usamos pasarela de pago y nunca te pedimos datos de tarjeta.</b></p>
+    <p><b>Ningún plan genera cobros automáticos.</b> Cuando un periodo termina, la cuenta vuelve al plan Gratis por sí sola: no hay nada que cancelar. Los precios pueden cambiar en cualquier momento, pero nunca afectan a un periodo ya pagado.</p>
+
+    <h3>5. Prueba gratuita</h3>
+    <p>La prueba de Pro dura 7 días, no pide datos de pago y no se renueva. Al terminar, la cuenta vuelve al plan Gratis. Es de un solo uso por persona.</p>
+
+    <h3>6. Garantía y devoluciones</h3>
+    <p><b>Si DROPIX no funciona en tu equipo, te devolvemos el pago.</b> Tienes 7 días desde la compra para escribirnos por WhatsApp. Devolvemos por el mismo medio por el que pagaste.</p>
+    <p>La garantía cubre que el programa no arranque o no funcione en tu computadora. No cubre que una plataforma concreta deje de estar disponible, ni que un video no ofrezca la resolución que esperabas: para comprobar ambas cosas están el plan Gratis y la prueba de 7 días, los dos sin pagar nada.</p>
+
+    <h3>7. Actualizaciones</h3>
+    <p>DROPIX se actualiza solo. Cada actualización viaja firmada y la aplicación verifica sus archivos en cada arranque; si detecta un archivo alterado, vuelve al estado de fábrica. Las actualizaciones pueden añadir, cambiar o retirar funciones.</p>
+
+    <h3>8. Disponibilidad de las plataformas</h3>
+    <p>Las plataformas de origen cambian sus sistemas con frecuencia y pueden bloquear descargas en cualquier momento. Mantenemos el motor al día, pero <b>no podemos garantizar que una plataforma concreta funcione siempre</b>, ni que un video ofrezca una resolución determinada: la calidad máxima depende de la que publique el origen.</p>
+
+    <h3>9. Límite de responsabilidad</h3>
+    <p>DROPIX se entrega «tal cual». Dentro de lo que permita la ley, no respondemos por daños indirectos, pérdida de datos o lucro cesante derivados del uso de la aplicación. En todo caso, nuestra responsabilidad se limita al importe que hayas pagado por tu licencia.</p>
+    <p>Tampoco respondemos por el uso que hagas de los archivos descargados: ese uso es responsabilidad tuya, según el punto 2.</p>
+
+    <h3>10. Cambios en estos términos</h3>
+    <p>Podemos actualizar estos términos. La fecha de arriba indica la última versión. Los cambios no se aplican con efecto retroactivo a un periodo ya pagado.</p>
+
+    <h3>11. Ley aplicable</h3>
+    <p>Estos términos se rigen por la legislación de la República del Perú. Cualquier controversia se somete a los juzgados de Lima.</p>
+  </section>
+
+  <section id="privacidad">
+    <h2>Privacidad</h2>
+
+    <h3>1. Quién trata tus datos</h3>
+    <p>Hype Academy, responsable de DROPIX. Puedes escribirnos por WhatsApp para cualquier asunto relacionado con tus datos: <a class="enl" href="https://wa.me/51937581119?text=Hola%2C%20tengo%20una%20consulta%20sobre%20DROPIX." target="_blank" rel="noopener">+51 937 581 119</a>.</p>
+
+    <h3>2. Qué guardamos</h3>
+    <p>Lo mínimo para que una licencia funcione. En concreto:</p>
+    <ul class="lista">
+      <li><b>De tu cuenta:</b> tu correo electrónico y el nombre que muestres.</li>
+      <li><b>De tu equipo:</b> un identificador calculado a partir de tu computadora y guardado como huella <b>SHA-256 no reversible</b>, junto al nombre del dispositivo y su sistema (Windows o macOS). Sirve para que la licencia funcione en un equipo a la vez.</li>
+      <li><b>De tu licencia:</b> el plan contratado, sus fechas y los códigos de activación emitidos.</li>
+      <li><b>De cada permiso de descarga:</b> la plataforma de origen, si era video o audio, la resolución pedida y la máxima que permite tu plan, la versión de la aplicación, el estado y la fecha. Sirve para aplicar los límites del plan Gratis.</li>
+    </ul>
+
+    <h3>3. Qué NO guardamos</h3>
+    <p>Esto no es una declaración de intenciones: son datos que <b>la base de datos no tiene dónde almacenar</b>.</p>
+    <ul class="lista">
+      <li><b>Los enlaces que pegas.</b> No se envían a nuestro servidor ni existe un campo donde guardarlos.</li>
+      <li><b>Los archivos que descargas o conviertes.</b> Nunca salen de tu computadora.</li>
+      <li><b>Direcciones IP ni identificadores del navegador</b> asociados a tu actividad de descarga.</li>
+      <li><b>Datos de pago.</b> No hay pasarela: no vemos ni almacenamos números de tarjeta.</li>
+    </ul>
+    <p>Los servidores donde se aloja el servicio pueden conservar registros técnicos propios y temporales, como cualquier servicio de internet.</p>
+
+    <h3>4. Para qué usamos esos datos</h3>
+    <p>Para emitir y validar tu licencia, aplicar los límites de tu plan, avisarte del vencimiento y darte soporte. No hacemos perfiles publicitarios ni vendemos datos a nadie.</p>
+
+    <h3>5. Con quién se comparten</h3>
+    <p>Solo con los proveedores necesarios para que el servicio funcione: el que aloja la base de datos y las cuentas (Supabase), el que aloja el servidor de licencias y el que envía los correos de aviso. Cada uno trata los datos por encargo nuestro y solo para esa finalidad. Con nadie más.</p>
+
+    <h3>6. Cuánto tiempo los conservamos</h3>
+    <p>Mientras tengas cuenta. Si nos pides que la eliminemos, borramos tus datos personales y las licencias asociadas, salvo lo que debamos conservar por obligación legal o contable.</p>
+
+    <h3>7. Tus derechos</h3>
+    <p>Puedes pedirnos acceder a tus datos, corregirlos o eliminarlos, y también oponerte a su tratamiento. Se hace escribiendo por WhatsApp; no hay formularios. Conforme a la Ley 29733 de Protección de Datos Personales del Perú, también puedes reclamar ante la Autoridad Nacional de Protección de Datos Personales.</p>
+
+    <h3>8. Menores</h3>
+    <p>DROPIX no está dirigido a menores de 14 años y no recogemos datos a sabiendas de ellos.</p>
+
+    <h3>9. Cambios en esta política</h3>
+    <p>Si cambia, actualizamos la fecha de arriba. Si el cambio es relevante, te avisamos desde la propia aplicación.</p>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <p>Para compras, soporte, datos personales o cualquier otra cosa, el canal es el mismo: <a class="enl" href="https://wa.me/51937581119?text=Hola%2C%20tengo%20una%20consulta%20sobre%20DROPIX." target="_blank" rel="noopener">WhatsApp +51 937 581 119</a>.</p>
+    <p>También puedes escribirnos desde la propia aplicación, en <b>Ayuda y soporte</b>: abre el mismo chat con el mensaje ya preparado.</p>
+  </section>
+
+  <div class="pie">
+    <span>&copy; 2026 DROPIX — Hype Academy. Todos los derechos reservados.</span>
+    <a class="enl" href="./index.html">Volver a la portada</a>
+  </div>
+</main>
+</body>
+</html>
