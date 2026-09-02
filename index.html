@@ -75,6 +75,12 @@
      iconos: 7,1 de contraste sobre blanco. */
   --brand-a:#6259FF;
   --brand-b:#3C00FF;
+  /* Paradas del degradado animado de los titulos. Van sobre TEXTO, asi
+     que las tres tienen que ser legibles por si solas sobre el fondo:
+     4,78 / 7,97 / 5,39 de contraste sobre blanco. */
+  --g1:#6259FF;
+  --g2:#3C00FF;
+  --g3:#7A3BFF;
   --violet:#4326FF;
   --violet-hi:#2E0BD9;
   --violet-deep:#2206AD;
@@ -131,6 +137,12 @@
        tambien se aclara: el #3C00FF del logo sobre fondo oscuro se apaga. */
     --brand-a:#7A6BFF;
     --brand-b:#4D2DFE;
+    /* En oscuro el degradado NO puede usar --brand-b: #4D2DFE da 2,88 de
+       contraste sobre el fondo y no se lee. Estas tres si: 4,96 / 11,42
+       / 6,98. */
+    --g1:#7A6BFF;
+    --g2:#C9BFFF;
+    --g3:#9A8CFF;
     --violet:#9A8CFF;
     --violet-hi:#B9AFFF;
     --violet-deep:#4D2DFE;
@@ -181,6 +193,12 @@
      tambien se aclara: el #3C00FF del logo sobre fondo oscuro se apaga. */
   --brand-a:#7A6BFF;
   --brand-b:#4D2DFE;
+  /* En oscuro el degradado NO puede usar --brand-b: #4D2DFE da 2,88 de
+     contraste sobre el fondo y no se lee. Estas tres si: 4,96 / 11,42
+     / 6,98. */
+  --g1:#7A6BFF;
+  --g2:#C9BFFF;
+  --g3:#9A8CFF;
   --violet:#9A8CFF;
   --violet-hi:#B9AFFF;
   --violet-deep:#4D2DFE;
@@ -585,22 +603,82 @@ h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
 @keyframes sube{from{transform:translateY(106%)}to{transform:none}}
 
 /* -- la linea de color lleva el degradado del logo, y se mueve despacio --- */
-h1.hero-h em > i{
-  background:linear-gradient(100deg,var(--brand-a),var(--violet) 40%,var(--brand-b) 70%,var(--brand-a));
-  background-size:280% 100%;
+.grad,h1.hero-h em > i{
+  background:linear-gradient(100deg,var(--g1),var(--g2) 26%,var(--g3) 48%,var(--g1) 72%,var(--g2));
+  background-size:300% 100%;
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:marca 12s linear infinite;
+  animation:marca 9s linear infinite;
 }
-@keyframes marca{to{background-position:280% 0}}
+@keyframes marca{to{background-position:300% 0}}
+/* Safari a veces recorta la ultima letra de un texto con background-clip.
+   Un pelo de relleno a la derecha lo evita sin mover nada de sitio. */
+.grad,h1.hero-h em > i{padding-right:.06em;margin-right:-.06em}
 
-/* -- los titulos de seccion entran con la misma rendija ------------------ */
-.s-head h2{overflow:hidden}
-.s-head h2 > span{display:block;transform:translateY(104%);
-  transition:transform .9s cubic-bezier(.16,1,.3,1)}
-.s-head.in h2 > span{transform:none}
+/* -- los titulos de seccion suben y aparecen -----------------------------
+   Aqui NO va la rendija del hero. El h1 esta partido en lineas, asi que cada
+   una tiene su propio recorte y siempre se lee entera. Estos h2 son un bloque
+   de una a tres lineas: recortarlos deja un instante en el que la ultima
+   linea sale cortada por la mitad, y eso se lee como texto roto, no como
+   animacion. Subida corta y desvanecido: no hay estado feo posible. */
+.s-head h2 > span{display:block;transform:translateY(18px);opacity:0;
+  transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .8s}
+.s-head.in h2 > span{transform:none;opacity:1}
 
 /* -- boton magnetico: se inclina hacia el cursor sin llegar a perseguirlo - */
 .btn-fill{will-change:transform}
+
+/* -- fichas que flotan alrededor de la captura ---------------------------- */
+/* LA ESCENA DEL HERO
+   El problema era de proporcion: la columna de texto mide unos 730 px de alto
+   y la captura se quedaba en 350. Sobraban 200 px muertos arriba y otros 200
+   abajo, y las fichas flotando ahi solo subrayaban el vacio.
+   La captura ahora se sale por la derecha y ocupa el alto de verdad; detras
+   lleva un resplandor de marca para que el aire tenga cuerpo, y las fichas se
+   agarran a su borde en vez de flotar sueltas. */
+.escena{position:relative;margin-right:calc(-1 * clamp(20px,5vw,64px))}
+.escena .shot{width:132%;max-width:none}
+
+/* El resplandor va DETRAS de la captura y desbordandola: es lo que impide que
+   el fondo se lea como un hueco pálido, sobre todo en tema claro. */
+.escena::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  inset:-22% -12% -26% -10%;
+  background:
+    radial-gradient(52% 50% at 38% 36%, color-mix(in srgb,var(--brand-a) 46%,transparent), transparent 72%),
+    radial-gradient(44% 44% at 80% 74%, color-mix(in srgb,var(--violet) 34%,transparent), transparent 70%);
+  filter:blur(44px);
+  animation:respira 13s ease-in-out infinite alternate;
+}
+@keyframes respira{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-2%,2%,0) scale(1.07)}}
+.escena .shot{position:relative;z-index:1}
+@media(max-width:1020px){
+  .escena{margin-right:0}
+  .escena .shot{width:100%}
+  .escena::before{inset:-10% -6%}
+}
+.ficha{
+  position:absolute;z-index:2;display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:12px;
+  background:color-mix(in srgb,var(--ground) 82%,transparent);
+  border:1px solid var(--hair-strong);
+  backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:0 18px 40px -22px rgba(15,11,40,.55);
+  animation:flota 7s ease-in-out infinite;
+}
+.ficha .ui-icon{width:18px;height:18px;color:var(--violet);flex:none}
+.ficha b{display:block;font-size:13px;letter-spacing:-.01em}
+.ficha span{display:block;font-size:11px;color:var(--text-3);margin-top:1px}
+/* Ancladas al borde izquierdo de la captura, pisandolo. Sueltas en el aire se
+   leian como tres cajas caidas al azar; montadas sobre el canto se leen como
+   lo que son: etiquetas de la propia app. Y forman una diagonal hacia donde
+   ya viene el ojo desde el texto. */
+.f-a{top:-30px;left:-42px}
+.f-b{top:46%;left:-28px;animation-delay:-2.4s}
+.f-c{bottom:-34px;left:9%;animation-delay:-4.8s}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+/* Por debajo de 1020px el hero pasa a una columna: ya no sobra sitio y las
+   fichas se comerian la captura. */
+@media(max-width:1020px){.ficha{display:none}}
 
 /* -- cuanto llevas leido, en el borde de la propia barra ----------------- */
 .prog{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden;pointer-events:none}
@@ -670,9 +748,10 @@ h1.hero-h em > i{
   .glow::after{display:none}
   .nav.tight .nav-in{height:72px}
   /* el titular y los h2 aparecen ya puestos, sin rendija que abrir */
-  h1.hero-h .ln > i,.s-head h2 > span{transform:none!important}
-  h1.hero-h em > i{animation:none;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--violet)}
+  h1.hero-h .ln > i,.s-head h2 > span{transform:none!important;opacity:1!important}
+  .grad,h1.hero-h em > i{animation:none;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--violet)}
   .prog{display:none}
+  .ficha{animation:none}
 }
 </style>
 
@@ -736,8 +815,25 @@ h1.hero-h em > i{
         </div>
       </div>
 
-      <div class="shot rise in d2">
-        <img src="./img/inicio.webp" width="1500" height="885" alt="Pantalla de inicio de DROPIX: barra para pegar el enlace, contador de descargas del plan Gratis, plataformas compatibles y las descargas recientes.">
+      <div class="escena rise in d2">
+        <div class="shot">
+          <img src="./img/inicio.webp" width="1500" height="885" alt="Pantalla de inicio de DROPIX: barra para pegar el enlace, contador de descargas del plan Gratis, plataformas compatibles y las descargas recientes.">
+        </div>
+        <!-- Fichas flotantes: llenan el hueco de arriba y abajo diciendo algo,
+             en vez de con adorno. Se ocultan en pantallas estrechas, donde no
+             hay hueco que llenar y solo estorbarian. -->
+        <div class="ficha f-a" aria-hidden="true">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/></svg>
+          <div><b>Hasta 8K</b><span>sin recodificar</span></div>
+        </div>
+        <div class="ficha f-b" aria-hidden="true">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9Z"/></svg>
+          <div><b>5 a la vez</b><span>en paralelo</span></div>
+        </div>
+        <div class="ficha f-c" aria-hidden="true">
+          <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 6.4A2 2 0 0 1 7.2 4.4h9.6a2 2 0 0 1 2 2v5.1c0 4.4-2.9 7.4-6.8 9.3-3.9-1.9-6.8-4.9-6.8-9.3Z"/><path d="m9.3 12 1.9 1.9 3.5-3.6"/></svg>
+          <div><b>Cero anuncios</b><span>todo en tu equipo</span></div>
+        </div>
       </div>
     </div>
 
@@ -758,7 +854,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">La escalera de calidad</span>
-      <h2><span>DROPIX no te pregunta si quieres lo mejor. Lo toma.</span></h2>
+      <h2><span class="grad">DROPIX no te pregunta si quieres lo mejor. Lo toma.</span></h2>
       <p>Cada barra es la resolución real, a escala. Un 8K no es «un poco más» que un 1080p: es dieciséis veces su superficie.</p>
     </div>
 
@@ -794,7 +890,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">El flujo completo</span>
-      <h2><span>Tres pasos. Ni uno más.</span></h2>
+      <h2><span class="grad">Tres pasos. Ni uno más.</span></h2>
       <p>Sin cuentas que crear, sin páginas que te reboten. Todo ocurre en tu máquina.</p>
     </div>
     <div class="steps rise d1">
@@ -822,7 +918,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Por dentro</span>
-      <h2><span>Un instrumento de precisión, no un botón mágico</span></h2>
+      <h2><span class="grad">Un instrumento de precisión, no un botón mágico</span></h2>
       <p>Lo que ves aquí es lo que verás instalado.</p>
     </div>
     <div class="tour">
@@ -848,7 +944,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Compatibilidad</span>
-      <h2><span>Seis plataformas principales, un solo motor</span></h2>
+      <h2><span class="grad">Seis plataformas principales, un solo motor</span></h2>
       <p>Las plataformas cambian cada mes. El motor se actualiza solo, sin que reinstales nada.</p>
     </div>
     <div class="pgrid rise d1">
@@ -868,7 +964,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Todo lo que trae</span>
-      <h2><span>Las cosas pequeñas que te ahorran la tarde</span></h2>
+      <h2><span class="grad">Las cosas pequeñas que te ahorran la tarde</span></h2>
       <p>Ninguna es espectacular por separado. Juntas te devuelven la tarde.</p>
     </div>
     <div class="feats rise d1">
@@ -887,7 +983,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Contra lo que usas hoy</span>
-      <h2><span>Ya sabes lo que se siente bajar un video «gratis»</span></h2>
+      <h2><span class="grad">Ya sabes lo que se siente bajar un video «gratis»</span></h2>
       <p>Tres botones y dos son falsos. El dominio cambia cada mes. Y el archivo, cuando sale, viene en 720p.</p>
     </div>
     <div class="cmp rise d1">
@@ -933,7 +1029,7 @@ h1.hero-h em > i{
           <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3Z"/><path d="m19 14 .7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14ZM5 13l.7 2.3L8 16l-2.3.7L5 19l-.7-2.3L2 16l2.3-.7L5 13Z"/></svg>
           SIN TARJETA
         </span>
-        <h2><span>Prueba DROPIX Pro gratis 7 días</span></h2>
+        <h2><span class="grad">Prueba DROPIX Pro gratis 7 días</span></h2>
         <p>Todo Pro durante una semana. Sin datos de pago y sin renovación automática: al terminar vuelves a Gratis, sin cancelar nada.</p>
       </div>
       <div class="trial-side">
@@ -952,7 +1048,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head mid rise">
       <span class="lab vi">Precios en soles</span>
-      <h2><span>Empieza gratis. Pasa a Pro cuando te haga falta.</span></h2>
+      <h2><span class="grad">Empieza gratis. Pasa a Pro cuando te haga falta.</span></h2>
     </div>
     <p class="pr-note rise d1">
       <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
@@ -1020,7 +1116,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Cómo funciona la compra</span>
-      <h2><span>Sin pasarela, sin formularios de tarjeta</span></h2>
+      <h2><span class="grad">Sin pasarela, sin formularios de tarjeta</span></h2>
       <p>Pagas como pagas todo lo demás en Perú. Nunca te pedimos datos de tarjeta.</p>
     </div>
     <div class="buy rise d1">
@@ -1052,7 +1148,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Confianza</span>
-      <h2><span>Diseñado para no darte sustos</span></h2>
+      <h2><span class="grad">Diseñado para no darte sustos</span></h2>
     </div>
     <div class="tgrid rise d1">
       <div class="tcard">
@@ -1084,7 +1180,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Preguntas frecuentes</span>
-      <h2><span>Lo que suelen preguntar antes de instalar</span></h2>
+      <h2><span class="grad">Lo que suelen preguntar antes de instalar</span></h2>
     </div>
     <div class="faq rise d1">
       <details class="fq" open>
@@ -1120,7 +1216,7 @@ h1.hero-h em > i{
   <div class="wrap">
     <div class="cta rise">
       <div>
-        <h2><span>Tu próxima descarga puede empezar en un minuto.</span></h2>
+        <h2><span class="grad">Tu próxima descarga puede empezar en un minuto.</span></h2>
         <p>Instala gratis, prueba el flujo completo y pasa a Pro solo si te hace falta.</p>
       </div>
       <div class="cta-side">
