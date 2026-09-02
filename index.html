@@ -329,6 +329,11 @@ h4{font-weight:680;letter-spacing:-.01em}
 .btn-sm .ui-icon{width:16px;height:16px}
 .btn-wide{width:100%}
 .btn-brand .ui-icon{width:16px;height:16px}
+/* La coletilla del boton de Mac. No es un adorno: la app es arm64 pura, asi
+   que en una Mac Intel no arranca -- macOS ni siquiera la deja abrir. Decirlo
+   en la letra fina no bastaba; quien tiene un MacBook de 2018 se bajaba 249 MB
+   para descubrirlo. */
+.btn-brand em{font-style:normal;font-weight:600;font-size:11.5px;opacity:.66;margin-left:2px}
 
 /* ── descarga por plataforma ──────────────────────────────────── */
 /* Uno al lado del otro mientras quepan; apilados solo cuando no. */
@@ -341,6 +346,9 @@ h4{font-weight:680;letter-spacing:-.01em}
 .dl-meta{margin:15px auto 0;font-size:12.5px;color:var(--text-3);line-height:1.65;max-width:52ch}
 .dl-meta a{color:var(--text-2);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--hair-strong);transition:color .16s,text-decoration-color .16s}
 .dl-meta a:hover{color:var(--violet);text-decoration-color:var(--violet)}
+/* El enlace de Intel se distingue del resto de la letra fina: quien lo
+   necesita esta buscandolo, y quien no, no tiene por que tropezarlo. */
+.dl-meta a.dl-intel{color:var(--violet);font-weight:620;text-decoration-color:var(--violet)}
 
 /* ── interruptor de tema ──────────────────────────────────────── */
 .tsw{
@@ -572,6 +580,7 @@ section{padding:clamp(60px,7.5vw,104px) 0;position:relative}
 .cta-side{position:relative;display:flex;flex-direction:column;gap:10px;flex:none}
 .cta-side .dl{display:flex;flex-wrap:wrap;gap:10px}
 .cta-side small{font-size:12px;color:rgba(255,255,255,.7);text-align:center}
+.cta-side small a{text-decoration:underline;text-underline-offset:2px;color:#fff}
 /* El degradado animado de los titulares esta hecho para leerse SOBRE EL FONDO
    DE LA PAGINA. Aqui el fondo es la propia marca, asi que el mismo violeta
    encima del violeta desaparecia. Mantiene el brillo que recorre la frase,
@@ -889,7 +898,7 @@ body.quieto .escena::before,body.quieto h1.hero-h::before{animation-play-state:p
           </a>
           <a class="btn btn-line btn-brand dl-mac" href="https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_macOS.dmg">
             <svg class="ui-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 12.6c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.2-2.7.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.6 2.2-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7 1.3 0 1.6.7 2.8.7 1.2 0 1.9-1 2.6-2.1.8-1.2 1.2-2.3 1.2-2.4-.1 0-2.2-.9-2.2-3.4Z"/><path d="M14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-2 .6-2.7 1.3-.6.6-1.1 1.6-.9 2.6 1 .1 2-.5 2.7-1.2Z"/></svg>
-            Descargar para Mac
+            Descargar para Mac <em>Apple Silicon</em>
           </a>
           <a class="lnk" href="#calidad">Ver de qué es capaz
             <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5"/></svg>
@@ -900,7 +909,7 @@ body.quieto .escena::before,body.quieto h1.hero-h::before{animation-play-state:p
           <span><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9Z"/></svg><b>5 a la vez</b><i>en paralelo</i></span>
           <span><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 6.4A2 2 0 0 1 7.2 4.4h9.6a2 2 0 0 1 2 2v5.1c0 4.4-2.9 7.4-6.8 9.3-3.9-1.9-6.8-4.9-6.8-9.3Z"/><path d="m9.3 12 1.9 1.9 3.5-3.6"/></svg><b>Cero anuncios</b><i>todo en tu equipo</i></span>
         </div>
-        <p class="dl-meta rise in d4">En Mac, la primera vez hay que autorizarla en <b>Ajustes del Sistema</b>. <a href="#faq-mac">Te explicamos cómo.</a></p>
+        <p class="dl-meta rise in d4">En Mac, la primera vez hay que autorizarla en <b>Ajustes del Sistema</b>. <a href="#faq-mac">Te explicamos cómo.</a><br><span class="dl-alt">¿Tu Mac es Intel, de 2020 o anterior?</span> <a class="dl-intel" href="https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_macOS_Intel.dmg">Descárgala aquí</a>.</p>
         <div class="hero-fine rise in d4">
           <span><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 6.4A2 2 0 0 1 7.2 4.4h9.6a2 2 0 0 1 2 2v5.1c0 4.4-2.9 7.4-6.8 9.3-3.9-1.9-6.8-4.9-6.8-9.3Z"/></svg>Actualizaciones verificadas</span>
           <span><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 8.5"/></svg>Gratis para empezar</span>
@@ -1297,7 +1306,7 @@ body.quieto .escena::before,body.quieto h1.hero-h::before{animation-play-state:p
       </details>
       <details class="fq" id="faq-mac">
         <summary>En Mac, ¿por qué me dice que «no se puede abrir»?<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-        <p>No es un fallo: es Gatekeeper, el filtro de macOS para lo que no pasa por la App Store. Se autoriza una vez y no vuelve a molestar:</p><p>1. Arrastra DROPIX a <b>Aplicaciones</b> y ábrela desde ahí. Saldrá el aviso: pulsa <b>Listo</b>.<br>2. Entra en <b>Ajustes del Sistema → Privacidad y seguridad</b> y baja hasta <b>Seguridad</b>.<br>3. Verás «Se ha bloqueado el uso de DROPIX» con el botón <b>Abrir de todos modos</b>. Púlsalo y confirma con tu contraseña o Touch ID.</p><p>Desde ahí abre con doble clic como cualquier app. En <b>macOS 15 (Sequoia) el antiguo clic derecho → Abrir ya no funciona</b>: Apple lo retiró y ahora hay que pasar por Ajustes. Pide <b>macOS 11 o superior con chip Apple</b>; en Mac Intel todavía no corre.</p>
+        <p>No es un fallo: es Gatekeeper, el filtro de macOS para lo que no pasa por la App Store. Se autoriza una vez y no vuelve a molestar:</p><p>1. Arrastra DROPIX a <b>Aplicaciones</b> y ábrela desde ahí. Saldrá el aviso: pulsa <b>Listo</b>.<br>2. Entra en <b>Ajustes del Sistema → Privacidad y seguridad</b> y baja hasta <b>Seguridad</b>.<br>3. Verás «Se ha bloqueado el uso de DROPIX» con el botón <b>Abrir de todos modos</b>. Púlsalo y confirma con tu contraseña o Touch ID.</p><p>Desde ahí abre con doble clic como cualquier app. En <b>macOS 15 (Sequoia) el antiguo clic derecho → Abrir ya no funciona</b>: Apple lo retiró y ahora hay que pasar por Ajustes.</p><p><b>¿Chip Apple o Intel?</b> Hay una descarga distinta para cada uno. Míralo en <b> → Acerca de este Mac</b>: si pone «Chip Apple M1/M2/M3/M4» usa el botón normal; si pone «Procesador… Intel», que es el caso de los Mac de 2020 y anteriores, baja <a href="https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_macOS_Intel.dmg">la versión para Intel</a>. Una no funciona en la otra: macOS ni siquiera deja abrirla.</p>
       </details>
     </div>
   </div>
@@ -1322,7 +1331,7 @@ body.quieto .escena::before,body.quieto h1.hero-h::before{animation-play-state:p
             Mac
           </a>
         </div>
-        <small>Descarga directa · v1.1.1</small>
+        <small>Descarga directa · v1.1.1 · <a href="https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_macOS_Intel.dmg">Mac Intel</a></small>
       </div>
     </div>
   </div>
@@ -1390,19 +1399,67 @@ body.quieto .escena::before,body.quieto h1.hero-h::before{animation-play-state:p
   /* ── descarga: si el visitante viene de una Mac, el .dmg pasa al
         frente y el boton de la barra baja el archivo directo ────── */
   var MAC_DMG = 'https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_macOS.dmg';
+  var MAC_INTEL = 'https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_macOS_Intel.dmg';
   var ua = navigator.userAgent || '';
   var plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
   var esMac = /mac/i.test(plat + ' ' + ua) && !/iphone|ipad|ipod|android/i.test(ua);
 
+  /* ── chip Apple o Intel ─────────────────────────────
+        El user agent NO sirve: en un M1 sigue diciendo "Intel Mac OS X",
+        porque Apple lo dejo asi por compatibilidad y Chrome copio el
+        comportamiento. Fiarse de el mandaria a TODOS los de chip Apple al
+        archivo de Intel.
+        Lo unico que distingue de verdad es preguntarle a WebGL por la GPU: un
+        chip Apple responde "Apple M1/M2...", un Mac Intel responde Intel, AMD
+        o NVIDIA. No siempre se puede -Safari lo restringe por privacidad- y
+        por eso devuelve null cuando no lo sabe. Ante la duda NO se toca nada
+        y decide el visitante: es preferible que elija a darle el archivo que
+        no le sirve. */
+  function chipIntel() {
+    try {
+      var lienzo = document.createElement('canvas');
+      var gl = lienzo.getContext('webgl') || lienzo.getContext('experimental-webgl');
+      if (!gl) return null;
+      var info = gl.getExtension('WEBGL_debug_renderer_info');
+      if (!info) return null;
+      var gpu = String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL) || '');
+      if (/apple\s*m\d|apple gpu/i.test(gpu)) return false;
+      if (/intel|amd|radeon|nvidia|geforce/i.test(gpu)) return true;
+      return null;
+    } catch (e) { return null; }
+  }
+
   if (esMac) {
+    var intel = chipIntel();
+
     var navBtn = document.getElementById('dl-nav');
-    if (navBtn) navBtn.setAttribute('href', MAC_DMG);
+    if (navBtn) navBtn.setAttribute('href', intel === true ? MAC_INTEL : MAC_DMG);
+
     document.querySelectorAll('.dl-win').forEach(function(b){
       b.classList.remove('btn-fill'); b.classList.add('btn-line');
     });
     document.querySelectorAll('.dl-mac').forEach(function(b){
       b.classList.remove('btn-line'); b.classList.add('btn-fill');
+      /* Si sabemos que es Intel, el boton grande baja el archivo que le sirve
+         y lo DICE en la etiqueta. Cambiar el destino en silencio seria peor
+         que no cambiarlo. */
+      if (intel === true) {
+        b.setAttribute('href', MAC_INTEL);
+        var eti = b.querySelector('em');
+        if (eti) eti.textContent = 'Intel';
+      }
     });
+
+    /* La letra fina ofrece SIEMPRE la otra, en el sentido que toque. */
+    if (intel === true) {
+      document.querySelectorAll('.dl-alt').forEach(function(s){
+        s.textContent = 'Hemos detectado un Mac con procesador Intel. \u00bfEl tuyo lleva chip Apple?';
+      });
+      document.querySelectorAll('.dl-intel').forEach(function(a){
+        a.setAttribute('href', MAC_DMG);
+        a.textContent = 'Descarga la otra';
+      });
+    }
   }
 
   /* ── la pregunta del Gatekeeper se abre sola al llegar por enlace ── */
