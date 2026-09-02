@@ -62,23 +62,30 @@
 
   --hair:#E0DEED;
   --hair-strong:#CCC9DE;
-  --track:rgba(57,27,243,.11);
+  --track:rgba(67,38,255,.12);
 
   --text:#0F0B28;
   --text-2:#5F5A7C;
   --text-3:#8681A3;
 
-  --violet:#391BF3;
-  --violet-hi:#210AB8;
-  --violet-deep:#1B0791;
+  /* El acento sale del isotipo. El hexagono va de #6259FF arriba a #3C00FF
+     abajo, promedio #4D2DFE: azul-violeta saturado, no lila. --brand-a y
+     --brand-b son esos dos extremos exactos, para que los botones lleven el
+     mismo degradado que el logo. --violet es la version legible para texto e
+     iconos: 7,1 de contraste sobre blanco. */
+  --brand-a:#6259FF;
+  --brand-b:#3C00FF;
+  --violet:#4326FF;
+  --violet-hi:#2E0BD9;
+  --violet-deep:#2206AD;
   --cyan:#0E7C8C;
   --rose:#D92D3C;
 
-  --wash-1:rgba(57,27,243,.05);
-  --wash-2:rgba(57,27,243,.10);
-  --wash-3:rgba(57,27,243,.15);
+  --wash-1:rgba(67,38,255,.05);
+  --wash-2:rgba(67,38,255,.11);
+  --wash-3:rgba(67,38,255,.16);
 
-  --bloom-a:rgba(107,60,255,.17);
+  --bloom-a:rgba(98,89,255,.20);
   --bloom-b:rgba(34,199,219,.13);
   --bloom-c:rgba(57,27,243,.11);
 
@@ -91,9 +98,9 @@
   --app-text-3:#8681A3;
 
   --sh-app:0 32px 74px -38px rgba(15,11,40,.42);
-  --sh-btn:0 10px 26px -13px rgba(33,10,184,.6);
-  --sh-btn-h:0 18px 38px -15px rgba(33,10,184,.7);
-  --sh-hot:0 24px 52px -30px rgba(33,10,184,.4);
+  --sh-btn:0 10px 26px -13px rgba(60,0,255,.55);
+  --sh-btn-h:0 18px 40px -15px rgba(60,0,255,.68);
+  --sh-hot:0 24px 52px -30px rgba(60,0,255,.38);
 
   --f-ui:Inter,"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
   --f-mono:ui-monospace,"Cascadia Mono","Consolas",monospace;
@@ -112,23 +119,29 @@
 
     --hair:#22205A;
     --hair-strong:#2C2A74;
-    --track:rgba(169,119,242,.16);
+    --track:rgba(154,140,255,.17);
 
     --text:#ECEAFB;
     --text-2:#A3A0BD;
     --text-3:#7B77A0;
 
-    --violet:#A977F2;
-    --violet-hi:#C4A3F7;
-    --violet-deep:#5B2AE8;
+    /* En oscuro el acento era #A977F2, un lila que no se parecia al logo.
+       Ahora se queda en la familia azul-violeta del isotipo, subido de brillo
+       para tener 7,0 de contraste sobre el fondo. El degradado de los botones
+       tambien se aclara: el #3C00FF del logo sobre fondo oscuro se apaga. */
+    --brand-a:#7A6BFF;
+    --brand-b:#4D2DFE;
+    --violet:#9A8CFF;
+    --violet-hi:#B9AFFF;
+    --violet-deep:#4D2DFE;
     --cyan:#22C7DB;
     --rose:#F4707C;
 
-    --wash-1:rgba(169,119,242,.08);
-    --wash-2:rgba(169,119,242,.15);
-    --wash-3:rgba(169,119,242,.22);
+    --wash-1:rgba(154,140,255,.09);
+    --wash-2:rgba(154,140,255,.16);
+    --wash-3:rgba(154,140,255,.23);
 
-    --bloom-a:rgba(124,77,255,.32);
+    --bloom-a:rgba(98,89,255,.34);
     --bloom-b:rgba(34,199,219,.14);
     --bloom-c:rgba(75,34,214,.24);
 
@@ -141,9 +154,9 @@
     --app-text-3:#7B77A0;
 
     --sh-app:0 50px 110px -40px rgba(0,0,0,.9);
-    --sh-btn:0 10px 28px -12px rgba(169,119,242,.6);
-    --sh-btn-h:0 18px 42px -14px rgba(169,119,242,.75);
-    --sh-hot:0 24px 58px -30px rgba(169,119,242,.6);
+    --sh-btn:0 10px 28px -12px rgba(122,107,255,.6);
+    --sh-btn-h:0 18px 42px -14px rgba(122,107,255,.75);
+    --sh-hot:0 24px 58px -30px rgba(122,107,255,.6);
   }
 }
 
@@ -156,23 +169,29 @@
 
   --hair:#22205A;
   --hair-strong:#2C2A74;
-  --track:rgba(169,119,242,.16);
+  --track:rgba(154,140,255,.17);
 
   --text:#ECEAFB;
   --text-2:#A3A0BD;
   --text-3:#7B77A0;
 
-  --violet:#A977F2;
-  --violet-hi:#C4A3F7;
-  --violet-deep:#5B2AE8;
+  /* En oscuro el acento era #A977F2, un lila que no se parecia al logo.
+     Ahora se queda en la familia azul-violeta del isotipo, subido de brillo
+     para tener 7,0 de contraste sobre el fondo. El degradado de los botones
+     tambien se aclara: el #3C00FF del logo sobre fondo oscuro se apaga. */
+  --brand-a:#7A6BFF;
+  --brand-b:#4D2DFE;
+  --violet:#9A8CFF;
+  --violet-hi:#B9AFFF;
+  --violet-deep:#4D2DFE;
   --cyan:#22C7DB;
   --rose:#F4707C;
 
-  --wash-1:rgba(169,119,242,.08);
-  --wash-2:rgba(169,119,242,.15);
-  --wash-3:rgba(169,119,242,.22);
+  --wash-1:rgba(154,140,255,.09);
+  --wash-2:rgba(154,140,255,.16);
+  --wash-3:rgba(154,140,255,.23);
 
-  --bloom-a:rgba(124,77,255,.32);
+  --bloom-a:rgba(98,89,255,.34);
   --bloom-b:rgba(34,199,219,.14);
   --bloom-c:rgba(75,34,214,.24);
 
@@ -185,9 +204,9 @@
   --app-text-3:#7B77A0;
 
   --sh-app:0 50px 110px -40px rgba(0,0,0,.9);
-  --sh-btn:0 10px 28px -12px rgba(169,119,242,.6);
-  --sh-btn-h:0 18px 42px -14px rgba(169,119,242,.75);
-  --sh-hot:0 24px 58px -30px rgba(169,119,242,.6);
+  --sh-btn:0 10px 28px -12px rgba(122,107,255,.6);
+  --sh-btn-h:0 18px 42px -14px rgba(122,107,255,.75);
+  --sh-hot:0 24px 58px -30px rgba(122,107,255,.6);
 }
 
 *{box-sizing:border-box}
@@ -238,7 +257,7 @@ h4{font-weight:680;letter-spacing:-.01em}
 }
 .btn .ui-icon{width:17px;height:17px;flex:none}
 .btn:active{transform:translateY(1px)}
-.btn-fill{background:linear-gradient(140deg,var(--violet),var(--violet-hi));color:#fff;box-shadow:var(--sh-btn)}
+.btn-fill{background:linear-gradient(140deg,var(--brand-a),var(--brand-b));color:#fff;box-shadow:var(--sh-btn)}
 .btn-fill:hover{transform:translateY(-2px);box-shadow:var(--sh-btn-h)}
 .btn-line{background:transparent;color:var(--text);border-color:var(--hair-strong)}
 .btn-line:hover{border-color:var(--violet);color:var(--violet)}
@@ -414,7 +433,7 @@ section{padding:clamp(60px,7.5vw,104px) 0;position:relative}
 .pr{display:flex;flex-direction:column;background:var(--ground);border:1px solid var(--hair);border-radius:16px;padding:26px 22px;position:relative;transition:border-color .2s,transform .2s,background .2s}
 .pr:hover{border-color:var(--hair-strong);transform:translateY(-3px)}
 .pr.hot{border-color:color-mix(in srgb,var(--violet) 50%,transparent);background:linear-gradient(175deg,var(--wash-2),transparent 58%),var(--ground);box-shadow:var(--sh-hot)}
-.pr-flag{position:absolute;top:-11px;left:22px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;color:#fff;background:linear-gradient(135deg,var(--violet),var(--violet-hi));padding:4px 11px;border-radius:100px}
+.pr-flag{position:absolute;top:-11px;left:22px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;color:#fff;background:linear-gradient(135deg,var(--brand-a),var(--brand-b));padding:4px 11px;border-radius:100px}
 .pr h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.005em}
 .pr h3 .ui-icon{width:17px;height:17px;color:var(--violet)}
 .pr-was{font-family:var(--f-mono);font-size:11.5px;color:var(--text-3);text-decoration:line-through;margin-top:15px}
@@ -549,10 +568,45 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
 .rise{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
 .rise.in{opacity:1;transform:none}
 .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
-/* ═══════════ MOVIMIENTO ═══════════ */
-/* Todo lo de esta seccion es decorativo. El bloque de prefers-reduced-motion
+
+/* Todo lo que sigue es decorativo. El bloque de prefers-reduced-motion
    que viene justo despues lo apaga entero: nada de aqui puede ser necesario
    para entender la pagina ni para comprar. */
+
+/* -- el titular sube linea por linea, cada una desde su propia rendija --- */
+h1.hero-h .ln{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+/* Animacion de CSS y no una clase que ponga el JS: si el script falla o esta
+   desactivado, una transicion dejaria el titular invisible para siempre. Asi
+   se dibuja igual, y bajo prefers-reduced-motion queda quieto en su sitio. */
+h1.hero-h .ln > i{display:block;font-style:inherit;
+  animation:sube 1s cubic-bezier(.16,1,.3,1) both}
+h1.hero-h .ln:nth-child(2) > i{animation-delay:.09s}
+h1.hero-h .ln:nth-child(3) > i{animation-delay:.18s}
+@keyframes sube{from{transform:translateY(106%)}to{transform:none}}
+
+/* -- la linea de color lleva el degradado del logo, y se mueve despacio --- */
+h1.hero-h em > i{
+  background:linear-gradient(100deg,var(--brand-a),var(--violet) 40%,var(--brand-b) 70%,var(--brand-a));
+  background-size:280% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:marca 12s linear infinite;
+}
+@keyframes marca{to{background-position:280% 0}}
+
+/* -- los titulos de seccion entran con la misma rendija ------------------ */
+.s-head h2{overflow:hidden}
+.s-head h2 > span{display:block;transform:translateY(104%);
+  transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.s-head.in h2 > span{transform:none}
+
+/* -- boton magnetico: se inclina hacia el cursor sin llegar a perseguirlo - */
+.btn-fill{will-change:transform}
+
+/* -- cuanto llevas leido, en el borde de la propia barra ----------------- */
+.prog{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden;pointer-events:none}
+.prog i{display:block;height:100%;transform:scaleX(var(--p,0));transform-origin:0 50%;
+  background:linear-gradient(90deg,var(--brand-a),var(--violet),var(--brand-b));
+  transition:transform .1s linear}
 
 /* -- el fondo respira: dos capas con ritmos distintos ------------------- */
 .bloom::after{
@@ -615,11 +669,16 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   /* el brillo del cursor y el compactado de la barra tampoco */
   .glow::after{display:none}
   .nav.tight .nav-in{height:72px}
+  /* el titular y los h2 aparecen ya puestos, sin rendija que abrir */
+  h1.hero-h .ln > i,.s-head h2 > span{transform:none!important}
+  h1.hero-h em > i{animation:none;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--violet)}
+  .prog{display:none}
 }
 </style>
 
 <!-- ═══════════════ NAV ═══════════════ -->
 <header class="nav">
+  <div class="prog" aria-hidden="true"><i></i></div>
   <div class="wrap nav-in">
     <a class="logo" href="#top">
       <img src="./img/icono.png" width="31" height="31" alt="" aria-hidden="true">
@@ -654,7 +713,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
     <div class="hero-grid">
       <div>
         <span class="hero-tag rise in"><i></i><span class="lab">Hype Academy · v1.1.1</span></span>
-        <h1 class="hero-h rise in d1">Todas tus plataformas.<em>Una sola descarga.</em></h1>
+        <h1 class="hero-h"><span class="ln"><i>Todas tus</i></span><span class="ln"><i>plataformas.</i></span><em class="ln"><i>Una sola descarga.</i></em></h1>
         <p class="hero-lede rise in d2">El escritorio que baja y convierte video, audio e imagen desde las seis plataformas que de verdad usas — <b>hasta 8K, con perfiles listos para editar</b>, procesado en tu propia máquina.</p>
         <div class="hero-cta dl rise in d3" id="descargar">
           <a class="btn btn-fill btn-brand dl-win" href="https://github.com/bambam145/dropix-releases/releases/download/v1.1.1/DROPIX_Setup_1.1.1.exe">
@@ -699,7 +758,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">La escalera de calidad</span>
-      <h2>DROPIX no te pregunta si quieres lo mejor. Lo toma.</h2>
+      <h2><span>DROPIX no te pregunta si quieres lo mejor. Lo toma.</span></h2>
       <p>Cada barra es la resolución real, a escala. Un 8K no es «un poco más» que un 1080p: es dieciséis veces su superficie.</p>
     </div>
 
@@ -735,7 +794,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">El flujo completo</span>
-      <h2>Tres pasos. Ni uno más.</h2>
+      <h2><span>Tres pasos. Ni uno más.</span></h2>
       <p>Sin cuentas que crear, sin páginas que te reboten. Todo ocurre en tu máquina.</p>
     </div>
     <div class="steps rise d1">
@@ -763,7 +822,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Por dentro</span>
-      <h2>Un instrumento de precisión, no un botón mágico</h2>
+      <h2><span>Un instrumento de precisión, no un botón mágico</span></h2>
       <p>Lo que ves aquí es lo que verás instalado.</p>
     </div>
     <div class="tour">
@@ -789,7 +848,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Compatibilidad</span>
-      <h2>Seis plataformas principales, un solo motor</h2>
+      <h2><span>Seis plataformas principales, un solo motor</span></h2>
       <p>Las plataformas cambian cada mes. El motor se actualiza solo, sin que reinstales nada.</p>
     </div>
     <div class="pgrid rise d1">
@@ -809,7 +868,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Todo lo que trae</span>
-      <h2>Las cosas pequeñas que te ahorran la tarde</h2>
+      <h2><span>Las cosas pequeñas que te ahorran la tarde</span></h2>
       <p>Ninguna es espectacular por separado. Juntas te devuelven la tarde.</p>
     </div>
     <div class="feats rise d1">
@@ -828,7 +887,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Contra lo que usas hoy</span>
-      <h2>Ya sabes lo que se siente bajar un video «gratis»</h2>
+      <h2><span>Ya sabes lo que se siente bajar un video «gratis»</span></h2>
       <p>Tres botones y dos son falsos. El dominio cambia cada mes. Y el archivo, cuando sale, viene en 720p.</p>
     </div>
     <div class="cmp rise d1">
@@ -874,7 +933,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
           <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3Z"/><path d="m19 14 .7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14ZM5 13l.7 2.3L8 16l-2.3.7L5 19l-.7-2.3L2 16l2.3-.7L5 13Z"/></svg>
           SIN TARJETA
         </span>
-        <h2>Prueba DROPIX Pro gratis 7 días</h2>
+        <h2><span>Prueba DROPIX Pro gratis 7 días</span></h2>
         <p>Todo Pro durante una semana. Sin datos de pago y sin renovación automática: al terminar vuelves a Gratis, sin cancelar nada.</p>
       </div>
       <div class="trial-side">
@@ -893,7 +952,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head mid rise">
       <span class="lab vi">Precios en soles</span>
-      <h2>Empieza gratis. Pasa a Pro cuando te haga falta.</h2>
+      <h2><span>Empieza gratis. Pasa a Pro cuando te haga falta.</span></h2>
     </div>
     <p class="pr-note rise d1">
       <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
@@ -961,7 +1020,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Cómo funciona la compra</span>
-      <h2>Sin pasarela, sin formularios de tarjeta</h2>
+      <h2><span>Sin pasarela, sin formularios de tarjeta</span></h2>
       <p>Pagas como pagas todo lo demás en Perú. Nunca te pedimos datos de tarjeta.</p>
     </div>
     <div class="buy rise d1">
@@ -993,7 +1052,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Confianza</span>
-      <h2>Diseñado para no darte sustos</h2>
+      <h2><span>Diseñado para no darte sustos</span></h2>
     </div>
     <div class="tgrid rise d1">
       <div class="tcard">
@@ -1025,7 +1084,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="s-head rise">
       <span class="lab vi">Preguntas frecuentes</span>
-      <h2>Lo que suelen preguntar antes de instalar</h2>
+      <h2><span>Lo que suelen preguntar antes de instalar</span></h2>
     </div>
     <div class="faq rise d1">
       <details class="fq" open>
@@ -1061,7 +1120,7 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
   <div class="wrap">
     <div class="cta rise">
       <div>
-        <h2>Tu próxima descarga puede empezar en un minuto.</h2>
+        <h2><span>Tu próxima descarga puede empezar en un minuto.</span></h2>
         <p>Instala gratis, prueba el flujo completo y pasa a Pro solo si te hace falta.</p>
       </div>
       <div class="cta-side">
@@ -1163,6 +1222,47 @@ footer{border-top:1px solid var(--hair);padding:48px 0 38px}
       a.addEventListener('click', function(){ faqMac.open = true; });
     });
     if (location.hash === '#faq-mac') faqMac.open = true;
+  }
+
+  /* ── cuanto llevas leido, pintado en el borde de la barra ─────── */
+  var pista = document.querySelector('.prog i');
+  if (pista && !reduce) {
+    var pintando = false;
+    var progreso = function () {
+      if (pintando) return;
+      pintando = true;
+      requestAnimationFrame(function () {
+        pintando = false;
+        var alto = document.documentElement.scrollHeight - window.innerHeight;
+        pista.style.setProperty('--p', alto > 0 ? Math.min(1, window.scrollY / alto) : 0);
+      });
+    };
+    window.addEventListener('scroll', progreso, { passive: true });
+    window.addEventListener('resize', progreso, { passive: true });
+    progreso();
+  }
+
+  /* ── botones magneticos ────────────────────────────────────────
+        Se inclinan hacia el cursor unos pocos pixeles y vuelven solos al
+        salir. El tope de 6px es a proposito: mas que eso deja de leerse como
+        "responde" y empieza a leerse como "se escapa", y el cliente falla el
+        clic. Solo con raton: en tactil no hay hacia donde inclinarse. */
+  if (!reduce && window.matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('.btn-fill').forEach(function (b) {
+      var dentro = false;
+      b.addEventListener('pointermove', function (e) {
+        var r = b.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+        var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        if (!dentro) { dentro = true; b.style.transition = 'transform .12s ease-out'; }
+        b.style.transform = 'translate(' + (dx * 12).toFixed(1) + 'px,' + (dy * 6).toFixed(1) + 'px)';
+      });
+      b.addEventListener('pointerleave', function () {
+        dentro = false;
+        b.style.transition = 'transform .45s cubic-bezier(.2,1.4,.4,1)';
+        b.style.transform = '';
+      });
+    });
   }
 
   /* ── brillo que sigue al cursor sobre las tarjetas ──────────────
